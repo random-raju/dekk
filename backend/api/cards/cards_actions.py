@@ -43,9 +43,8 @@ def card_difference(og_card, current_card):
 
     difference = DeepDiff(og_card, current_card)
     updated_fields = []
-    # print(difference)
+
     for key in difference:
-        print(key)
         for col_key in difference[key].keys():
             updated_fields.append((col_key.split("['")[1].split("']")[0]))
 
