@@ -41,7 +41,7 @@ class AutoSuggestTags:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_get(self, req, resp):
 
         query_result = get_all_unique_tags_on_cards(self.db_conn)

@@ -154,18 +154,10 @@ def remove_folder_name(file):
 
 for file in glob.glob("./data_verified/*"):
 
-    if "Biochemistry" in file:
-        continue
-
-    print("===========================")
-    print(file)
-
     data = open(file).read()
     data = re.split(r"===+", data)
     file = remove_folder_name(file)
     main_tags = file.split(" - ")
-
-    print(main_tags)
 
     for item in data:
         TAGS = []
@@ -192,10 +184,10 @@ for file in glob.glob("./data_verified/*"):
         if card_dict and card_dict["title"]:
             # print(card_dict)
             TAGS = [i.strip() for i in TAGS if i.strip()]
-            print(TAGS)
+            # print(TAGS)
             for tag in TAGS:
                 card_dict["account_id"] = 1
-                print(card_dict)
+                # print(card_dict)
                 card_hash = get_hash_for_cards(card_dict, HASH_KEYS_CARDS)
                 card_dict["card_id"] = card_hash
                 dict_ = {

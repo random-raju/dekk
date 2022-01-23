@@ -268,5 +268,20 @@ class QueryManager:
         else:
             self.conn_obj.conn.commit()
 
+    def pg_fetch_rows(self, skeleton, values):
+        """
+        Just exec query and conver to dict
+        """
+
+        self.conn_obj.cursor.execute(skeleton, values)
+        columns = [y[0] for y in self.conn_obj.cursor.description]
+        rows = self.conn_obj.cursor.fetchall()
+        rows = [dict(zip(columns, row)) for row in rows]
+
+        return rows
+
+    def exec_sql_statement(self, statement, data_dict):
+        self.conn_obj.cursor.execute(statement, data_dict)
+
     def __str__(self):
         return str(self.conn_obj)

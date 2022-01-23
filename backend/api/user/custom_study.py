@@ -60,7 +60,7 @@ def get_study_cards(db_conn, req):
         t1.permission,t1.type,t1.image_links,t1.card_id
         from user_content.cards t1 inner join
         user_content.tags_cards t2 on t1.card_id = t2.card_id
-        where t2.tag_id in ( {id_clause} ) and t1.card_id not in (select card_id from users.sessions where account_id = {account_id})
+        where t2.tag_id in ( {id_clause} ) and t1.card_id not in (select card_id from users.activity_log where account_id = {account_id})
         order by random()
         offset {offset}
         limit 10
@@ -75,7 +75,7 @@ def get_study_cards(db_conn, req):
     #     where t2.tag_id in ( {id_clause} )
     # """
     # total_cards = db_conn.fetch_query_direct_query(total_cards)
-    db_conn.table = "sessions"
+    db_conn.table = "activity_log"
     db_conn.collection = "users"
 
     if not session_id:
@@ -99,7 +99,7 @@ def get_study_cards(db_conn, req):
         "cards": session_cards,
     }
 
-    db_conn.table = "sessions"
+    db_conn.table = "activity_log"
     db_conn.collection = "users"
 
     return response
@@ -196,7 +196,7 @@ class GetCustomStudyMenu:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_get(self, req, resp):
         try:
             result = create_custom_study_menu(self.db_conn, req)
@@ -216,7 +216,7 @@ class GetCustomStudyCards:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_post(self, req, resp):
         try:
             # req.params["ids"] = req.params.get("ids", 30)

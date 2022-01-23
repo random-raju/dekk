@@ -91,7 +91,7 @@ class Home:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_get(self, req, resp):
 
         query_result = get_master_topics_stats(self.db_conn, req)
