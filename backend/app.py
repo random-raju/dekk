@@ -23,6 +23,7 @@ from api.tags.list_master_topics import AutoSuggestTags
 from api.user.custom_study import GetCustomStudyMenu, GetCustomStudyCards
 from api.resources.get_colleges import Colleges
 from api.cards.search import SearchCards, SearchCardsByTags
+from api.user.ratings import Ratings
 
 
 class HandleCORS(object):
@@ -67,6 +68,9 @@ def initialize_routes() -> falcon.API:
 
     api.add_route("/api/v1/select/dekk", GetCustomStudyMenu())  # ok
     api.add_route("/api/v1/study/dekk", GetCustomStudyCards())  # ok
+    api.add_route("/api/v1/ratings/dekk", Ratings())  # ok
+
+    api.add_route(f"{api_version}/resources/colleges", Colleges())  # ok
 
     api.add_route(f"{api_version}/resources/colleges", Colleges())  # ok
 

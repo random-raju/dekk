@@ -20,7 +20,7 @@ load_dotenv(".local.env")
 
 def get_hash_for_cards(data_dict, hsh_keys):
     """
-	Create hash of the string of (location_value, court_value)
+
 	"""
 
     # Asserting hsh_keys is not empty

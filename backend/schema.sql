@@ -92,12 +92,14 @@ CREATE TABLE users.activity_log (
 );
 
 CREATE TABLE users.ratings (
+	id varchar null,
 	account_id int4 NOT NULL ,
-	created_at timestamp without time zone default (now() at time zone 'utc'),
-	updated_at timestamp without time zone default (now() at time zone 'utc'),
 	rating numeric NULL,
 	dekk_id varchar NULL,
 	comments varchar null,
+	created_at timestamp without time zone default (now() at time zone 'utc'),
+	updated_at timestamp without time zone default (now() at time zone 'utc'),
+	UNIQUE (id),
 	CONSTRAINT fk_user_and_ratings FOREIGN KEY (account_id) REFERENCES users.accounts(account_id),
 	CONSTRAINT fk_user_and_dekk FOREIGN KEY (dekk_id) REFERENCES user_content.tags(tag_id)
 );
