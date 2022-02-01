@@ -24,6 +24,8 @@ from api.user.custom_study import GetCustomStudyMenu, GetCustomStudyCards
 from api.resources.get_colleges import Colleges
 from api.cards.search import SearchCards, SearchCardsByTags
 from api.user.ratings import Ratings
+from api.user.bookmark import BookmarkCard, UnmarkCard
+from api.user.view import ViewCard
 
 
 class HandleCORS(object):
@@ -69,6 +71,9 @@ def initialize_routes() -> falcon.API:
     api.add_route("/api/v1/select/dekk", GetCustomStudyMenu())  # ok
     api.add_route("/api/v1/study/dekk", GetCustomStudyCards())  # ok
     api.add_route("/api/v1/ratings/dekk", Ratings())  # ok
+    api.add_route("/api/v1/bookmark/card/{card_id}", BookmarkCard())  # ok
+    api.add_route("/api/v1/unmark/card/{card_id}", UnmarkCard())  # ok
+    api.add_route("/api/v1/view/card/{card_id}", ViewCard())  # ok
 
     api.add_route(f"{api_version}/resources/colleges", Colleges())  # ok
 

@@ -1,15 +1,16 @@
 """
 Sample API calls:
     GET - http://127.0.0.1:8000/api/v1/select/dekk
-    GET - http://127.0.0.1:8000/api/v1/study/dekk?ids=['6861b260e42245a197029c5a5729b4f3','557934b5fbf7f080353ac0e3f9fb433e']
-    GET - http://127.0.0.1:8000/api/v1/study/dekk?cards_count=20&ids=['6861b260e42245a197029c5a5729b4f3','557934b5fbf7f080353ac0e3f9fb433e']
+
+    POST - http://127.0.0.1:5000/api/v1/study/dekk
+    {
+        "cards_count": 100,
+        "ids": ["cd888b33d7219a2a970f855aabb01cde", "204af12a0bb2a5bbdf80e6b6b77bd64b"],
+        "offset": 10
+    }
 
 """
-import ast
-import hashlib
-import json
 import os
-import uuid
 
 import falcon
 import jwt
@@ -18,6 +19,46 @@ from utils import http_response
 from utils import postgres
 from utils.add_cards import get_hash
 from utils.add_cards import HASH_KEYS
+
+
+def load_all_curated_content(db_obj, account_id):
+
+    query = f"""
+        INSERT INTO users.activity_log (id ,account_id ,card_id, views)
+        SELECT md5(concat({account_id},card_id)),{account_id}, card_id, 0 FROM user_content.cards ON CONFLICT DO NOTHING
+
+    """
+    db_obj.conn_obj.cursor.execute(query)
+    db_obj.conn_obj.conn.commit()
+
+
+def get_cards_by_tags(db_conn, tag_ids, offset):
+
+    id_clause = [f"'{id}'" for id in tag_ids]
+    id_clause = ",".join(id_clause)
+
+    query = f"""
+            SELECT
+            t1.title,t1.content_on_front,t1.content_on_back,
+            t1.highlighted_keywords,t1.permission,t1.type,
+            t1.image_links,t1.card_id
+            FROM
+                    user_content.cards t1
+                INNER JOIN
+                    users.activity_log t2 ON
+                t1.card_id = t2.card_id
+            WHERE
+                t1.card_id IN
+                (
+                    SELECT card_id FROM user_content.tags_cards
+                    WHERE tag_id IN ( {id_clause} ) ORDER BY random()
+                )
+            ORDER BY t2.views ASC OFFSET {offset} LIMIT 10
+            """
+
+    session_cards = db_conn.fetch_query_direct_query(query)
+
+    return session_cards
 
 
 def get_study_cards(db_conn, req):
@@ -29,19 +70,21 @@ def get_study_cards(db_conn, req):
     if not req_data:
         return {}
 
-    # get account id
     env = os.environ.get(f"ENV")
     secret = os.environ.get(f"SECRET_{env}")
     token = req.headers.get("AUTHORIZATION")
     decode = jwt.decode(token, secret, verify="False", algorithms=["HS256"])
 
     account_id = decode["account_id"]
+    session_id = decode["session_id"]
+
     offset = req_data["offset"]
     cards_count = req_data["cards_count"]
-    ids = req_data["ids"]
-    session_id = req_data.get("session_id", None)
+    tag_ids = req_data["ids"]
 
-    if offset >= cards_count and session_id:
+    load_all_curated_content(db_conn, account_id)
+
+    if offset >= cards_count:
         response = {
             "session_id": session_id,
             "total_cards_to_study": cards_count,
@@ -51,56 +94,14 @@ def get_study_cards(db_conn, req):
 
         return response
 
-    id_clause = [f"'{id}'" for id in ids]
-    id_clause = ",".join(id_clause)
-
-    cards_query = f"""
-        select
-        t1.title,t1.content_on_front,t1.content_on_back,t1.highlighted_keywords,
-        t1.permission,t1.type,t1.image_links,t1.card_id
-        from user_content.cards t1 inner join
-        user_content.tags_cards t2 on t1.card_id = t2.card_id
-        where t2.tag_id in ( {id_clause} ) and t1.card_id not in (select card_id from users.activity_log where account_id = {account_id})
-        order by random()
-        offset {offset}
-        limit 10
-    """
-    session_cards = db_conn.fetch_query_direct_query(cards_query)
-
-    # total_cards = f"""
-    #     select
-    #         count(*)
-    #     from user_content.cards t1 inner join
-    #     user_content.tags_cards t2 on t1.card_id = t2.card_id
-    #     where t2.tag_id in ( {id_clause} )
-    # """
-    # total_cards = db_conn.fetch_query_direct_query(total_cards)
-    db_conn.table = "activity_log"
-    db_conn.collection = "users"
-
-    if not session_id:
-        session_id = str(uuid.uuid4())
-
-    for card in session_cards:
-        session_dict = {
-            "account_id": account_id,
-            "card_id": card["card_id"],
-            "no_of_cards": cards_count,
-            "session_id": session_id,
-            "viewed": True,
-            "views": 1,
-        }
-        status = db_conn.pg_handle_insert(session_dict)
+    study_session_cards = get_cards_by_tags(db_conn, tag_ids, offset)
 
     response = {
         "session_id": session_id,
         "total_cards_to_study": cards_count,
-        "total_cards_given": len(session_cards) + offset,
-        "cards": session_cards,
+        "total_cards_given": len(study_session_cards) + offset,
+        "cards": study_session_cards,
     }
-
-    db_conn.table = "activity_log"
-    db_conn.collection = "users"
 
     return response
 

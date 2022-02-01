@@ -4,10 +4,10 @@ drop table IF EXISTS user_content.cards cascade ;
 drop table IF EXISTS user_content.tags_cards cascade;
 drop table IF EXISTS user_content.tags cascade;
 
+drop table IF EXISTS users.sessions cascade;
+drop table IF EXISTS users.ratings cascade;
 drop table IF EXISTS users.activity_log cascade;
 drop table IF EXISTS users.accounts cascade;
-drop table IF EXISTS users.ratings cascade;
-drop table IF EXISTS users.sessions cascade;
 
 drop schema IF EXISTS users;
 drop schema IF EXISTS user_content;
@@ -77,32 +77,6 @@ CREATE TABLE user_content.tags_cards (
 	CONSTRAINT fk_tags_cards_tags FOREIGN KEY (tag_id) REFERENCES user_content.tags(tag_id)
 );
 
-CREATE TABLE users.activity_log (
-	account_id int4 NOT NULL,
-	session_id varchar not null,
-	card_id varchar not null,
-	no_of_cards int not null,
-	viewed boolean null,
-	bookmarked boolean null,
-	views int null,
-	created_at timestamp NULL DEFAULT timezone('utc'::text, now()),
-	updated_at timestamp NULL DEFAULT timezone('utc'::text, now()),
-	UNIQUE (account_id,card_id),
-	CONSTRAINT fk_us_accounts_ua_accounts FOREIGN KEY (account_id) REFERENCES users.accounts(account_id)
-);
-
-CREATE TABLE users.ratings (
-	id varchar null,
-	account_id int4 NOT NULL ,
-	rating numeric NULL,
-	dekk_id varchar NULL,
-	comments varchar null,
-	created_at timestamp without time zone default (now() at time zone 'utc'),
-	updated_at timestamp without time zone default (now() at time zone 'utc'),
-	UNIQUE (id),
-	CONSTRAINT fk_user_and_ratings FOREIGN KEY (account_id) REFERENCES users.accounts(account_id),
-	CONSTRAINT fk_user_and_dekk FOREIGN KEY (dekk_id) REFERENCES user_content.tags(tag_id)
-);
 
 CREATE TABLE users.sessions (
 	account_id int4 NOT NULL ,
@@ -114,6 +88,34 @@ CREATE TABLE users.sessions (
 	updated_at timestamp without time zone default (now() at time zone 'utc'),
 	CONSTRAINT fk_user_and_sessions FOREIGN KEY (account_id) REFERENCES users.accounts(account_id),
 	UNIQUE (account_id,is_active)
+);
+
+
+CREATE TABLE users.activity_log (
+	id varchar not null,
+	account_id int4 NOT NULL,
+	card_id varchar not null,
+	viewed boolean null,
+	bookmarked boolean null,
+	views int null,
+	created_at timestamp NULL DEFAULT timezone('utc'::text, now()),
+	updated_at timestamp NULL DEFAULT timezone('utc'::text, now()),
+	UNIQUE (id),
+	CONSTRAINT fk_activity_log_ua_accounts FOREIGN KEY (account_id) REFERENCES users.accounts(account_id)
+
+);
+
+CREATE TABLE users.ratings (
+	id varchar null,
+	account_id int4 NOT NULL ,
+	rating numeric NULL,
+	dekk_id varchar not NULL,
+	comments varchar null,
+	created_at timestamp without time zone default (now() at time zone 'utc'),
+	updated_at timestamp without time zone default (now() at time zone 'utc'),
+	UNIQUE (id),
+	CONSTRAINT fk_user_and_ratings FOREIGN KEY (account_id) REFERENCES users.accounts(account_id),
+	CONSTRAINT fk_user_and_dekk FOREIGN KEY (dekk_id) REFERENCES user_content.tags(tag_id)
 );
 
 
