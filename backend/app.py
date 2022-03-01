@@ -26,6 +26,7 @@ from api.cards.search import SearchCards, SearchCardsByTags
 from api.user.ratings import Ratings
 from api.user.bookmark import BookmarkCard, UnmarkCard
 from api.user.view import ViewCard
+from api.images.on_card import ImagesOnCard
 
 
 class HandleCORS(object):
@@ -77,7 +78,7 @@ def initialize_routes() -> falcon.API:
 
     api.add_route(f"{api_version}/resources/colleges", Colleges())  # ok
 
-    api.add_route(f"{api_version}/resources/colleges", Colleges())  # ok
+    api.add_route(f"{api_version}/images/card", ImagesOnCard())  # ok
 
     return api
 

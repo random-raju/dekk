@@ -1,1 +1,40 @@
-Data model - done
+
+1. Ratings
+2. card usage tracker
+    -> bookmark
+    -> views
+5. Images
+    ->
+9. No of cards in dekk issue 1 or 0
+14. Custom study retrieval revamp
+15. Take care of DB CRUD permissions
+16. SSL
+17. Some security stuff
+4. revamp login and maintain session
+    logout
+    forgot password
+10. Logger
+12. Add AWs postgres
+13. Fix search releavence
+14. Refactor code?
+    --> sql
+
+
+6. sub dekks apis -> done
+7. create tag -> done
+8. password hash -> done
+10. add is_owner ->
+            /home --> done
+            /select/dekk --> done
+11. Fix edit --> done
+3. delete --> done
+11. Deploy --> done
+
+
+Questions:
+1. Can't go to the edit dekk view
+
+Todo front end:
+    1. Make sure code doesn't break and come to an halt
+    2. don't make college compulsory
+    3. highlight option issue
