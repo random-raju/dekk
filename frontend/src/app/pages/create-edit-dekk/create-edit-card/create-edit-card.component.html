@@ -18,9 +18,7 @@
     <div class="col-5">
         <div class="edit-card-page">
             <div class="input-field">
-                <span class="input-label"> Tags* </span>
                 <mat-form-field class="input-form-field">
-                    <p class="input-label-when-small"> Tags </p>
                     <mat-select [formControl]="tags" multiple (selectionChange)="onTagSelected($event)">
                         <mat-select-trigger>
                             <mat-chip-list>

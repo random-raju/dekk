@@ -25,6 +25,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { NgMatSearchBarModule } from 'ng-mat-search-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -64,8 +65,8 @@ import { MsgDialogComponent } from './common/components/msg-dialog/msg-dialog.co
 import { CreateEditSubdekkDetailComponent } from './pages/create-edit-dekk/create-edit-subdekk-detail/create-edit-subdekk-detail.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-
-
+import { CreateDekkCardComponent } from './pages/create-dekk-card/create-dekk-card.component';
+// import { TextInputHighlightModule } from 'angular-text-input-highlight';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MsgDialogComponent,
     CreateEditSubdekkDetailComponent,
     PageNotFoundComponent,
+    CreateDekkCardComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -113,6 +115,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     EditorModule,
     BarRatingModule,
     NgxMatSelectSearchModule,
+    // TextInputHighlightModule,
     MatButtonModule,
     MatSlideToggleModule,
     MatToolbarModule,
@@ -133,7 +136,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MatMenuModule,
     MatDividerModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTabsModule
   ],
   providers: [
     CdkColumnDef

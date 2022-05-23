@@ -2,64 +2,38 @@
   <app-loading></app-loading>
 </div>
 
-<div class="row page-container" [hidden]="isLoading">
-  <div class="col-md-1"></div>
-  <div class="col-md-3 left-panel-container">
-    <mat-card class="card-container">
-      <mat-card-subtitle class="content-title">{{ getCardCategory() }}</mat-card-subtitle>
-      <mat-card-content class="content-item"> <h1 class="content-item-content">{{ currentDekk.dekk_name }}</h1> </mat-card-content>
-    </mat-card>
-    <button mat-raised-button class="card-action-button" (click)="studyDekk()"> Study </button>
-    <!-- <button mat-raised-button class="card-action-button"> Reset Progress </button> -->
-    <button mat-raised-button color="primary" class="card-action-button" (click)="editDekk()"> Edit Dekk </button>
-    <!-- <button mat-raised-button class="card-action-button" (click)="rateDialog()"> Rate Dekk </button> -->
-  </div>
-  <div class="separator-when-small">
-    <hr>
-  </div>
-  <div class="col-md-7 right-panel-container">
-    <h2>Cards</h2>
-    <div class="right-panel-table-container">
-      <!-- <span class="right-table-row">
-        <div class="right-table-key">
-          Tags
-        </div>
-        <div class="right-table-value">
-          <mat-chip-list>
-            <mat-chip *ngFor="let tag of dekkTagsList">
-                {{tag}}
-            </mat-chip>
-          </mat-chip-list>
-        </div>
-      </span>
-      <hr> -->
-      <span class="right-table-row">
-        <button mat-raised-button color="primary" (click)="addCard()">Add Card</button>
-      </span>
+<div class="page-container" [hidden]="isLoading">
+  <div class="right-panel-container">
+    <div class="dekk-title">
+      {{ currentDekk.dekk_name }}
+    </div>
+    <div class="right-panel-table-container general-text">
       <span class="right-table-row" [hidden]="currentDekk.cards.length === 0">
-        <!-- <div class="">
-          Cards
-        </div> -->
         <div class="cards-table-container">
           <table mat-table class="mat-elevation-z0 cards-table" [dataSource]="currentDekk.cards">
             <ng-container matColumnDef="card">
               <th mat-header-cell *matHeaderCellDef>card</th>
               <td mat-cell *matCellDef="let element">{{element.title}}</td>
             </ng-container>
+            <ng-container matColumnDef="preview">
+              <th mat-header-cell *matHeaderCellDef>preview</th>
+              <td mat-cell *matCellDef="let element">
+                <div class="cell-preview"> {{element.content_on_front}} </div>
+              </td>
+            </ng-container>
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef>action</th>
               <td mat-cell *matCellDef="let element">
                 <div class="action-button-in-cards-table"> 
-                  <button mat-button matTooltip="Preview: {{element.content_on_front}}">
+                  <!-- <button mat-button matTooltip="Preview: {{element.content_on_front}}">
                     <mat-icon>visibility</mat-icon>
-                  </button>
+                  </button> -->
                   <button mat-button matTooltip="Edit Card" (click)="editCard(element.card_id)">
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button mat-button matTooltip="Delete Card" (click)="deleteCard(element.card_id)">
                     <mat-icon>delete</mat-icon>
                   </button>
-                  <!-- <button mat-raised-button color="primary" (click)="editCard(element.card_id)">Edit</button> -->
                 </div>
               </td>
             </ng-container>
@@ -67,33 +41,9 @@
           </table>
         </div>
       </span>
-      <!-- <table mat-table class="mat-elevation-z0 right-table"> -->
-        <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
-        <!-- <tr mat-row class="table-row">
-          <td mat-cell class="left-column">Tags</td>
-          <td mat-cell class="right-column">
-            <mat-chip-list>
-              <mat-chip *ngFor="let tag of dekkTagsList">
-                  {{tag}}
-              </mat-chip>
-            </mat-chip-list>
-          </td>
-        </tr>
-        <hr class="row-separator">
-        <tr mat-row class="table-row">
-          <td mat-cell class="left-column">Cards</td>
-          <td mat-cell class="right-column">
-            <table mat-table class="mat-elevation-z8" [dataSource]="cardsList">
-              <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef>Card</th>
-                <td mat-cell *matCellDef="let element">{{element.title}}</td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            </table>
-          </td>
-        </tr> -->
-      <!-- </table> -->
     </div>
+    <span class="right-table-row">
+      <button mat-stroked-button class="quarter-opacity-outline-themed add-card" (click)="addCard()">Add Card</button>
+    </span>
   </div>
-  <div class="col-md-1"></div>
 </div>

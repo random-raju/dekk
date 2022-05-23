@@ -108,3 +108,14 @@ div {
   margin-top: 10px;
   width: 60vw !important;
 }
+
+.search-result-title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0 10px 0;
+}
+
+.search-result-title {
+  width: 90vw;
+}

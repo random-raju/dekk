@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { CardViewDetailsComponent } from './pages/card-view-details/card-view-details.component';
+import { CreateDekkCardComponent } from './pages/create-dekk-card/create-dekk-card.component';
 import { CreateEditCardComponent } from './pages/create-edit-dekk/create-edit-card/create-edit-card.component';
 import { CreateEditDekkDetailComponent } from './pages/create-edit-dekk/create-edit-dekk-detail/create-edit-dekk-detail.component';
 import { CreateEditSubdekkDetailComponent } from './pages/create-edit-dekk/create-edit-subdekk-detail/create-edit-subdekk-detail.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent, pathMatch: 'full' },
   { path: 'edit', component: TextEditComponent, pathMatch: 'full' },
   { path: 'create', component: CreateEditDekkDetailComponent, pathMatch: 'full' },
+  { path: 'create-dekk-card', component: CreateDekkCardComponent, pathMatch: 'full' },
   { path: 'create-subdekk', component: CreateEditSubdekkDetailComponent, pathMatch: 'full' },
   { path: 'dekk-edit-view', component: DekkWithCardsEditViewComponent, pathMatch: 'full' },
   { path: 'card-edit-view', component: CreateEditCardComponent, pathMatch: 'full' },

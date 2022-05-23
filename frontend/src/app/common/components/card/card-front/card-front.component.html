@@ -1,26 +1,34 @@
 <mat-card class="card-container dekk-or-card-shadow">
-  <mat-card-subtitle class="unselectable-content card-subtitle">
-    <span class="dekk-name card-header">{{getCardDekk()}}</span>
-    <span>
-      <mat-icon class="card-options-icon" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="rateDialog()">Feedback</button>
-        <!-- <button mat-menu-item>
-          <mat-icon class="menu-item-icon">star</mat-icon>
-          Bookmark
-        </button> -->
-      </mat-menu>
-    </span>
-  </mat-card-subtitle>
-  <mat-card-content class="content-item card-content">
-    <div class="content-item card-content-text unselectable-content" [innerHtml]="content"></div>
-    <div class="content-item img-container">
-      <img class="img-class img-first" alt="Could not load image" (load)="firstImageLoaded()" [hidden]="!getFirstImageSrc() || firstImageLoading" (click)="openImg(getFirstImageSrc())" src="{{getFirstImageSrc()}}" />
-      <img class="img-class" alt="Could not load image" (load)="secondImageLoaded()" [hidden]="!getSecondImageSrc() || secondImageLoading" (click)="openImg(getSecondImageSrc())" src="{{getSecondImageSrc()}}" />
+  <div class="card-content-container">
+    <div>
+      <div class="content-item img-container" [hidden]="isNoImages()">
+        <img class="img-class img-first" alt="Could not load image" (load)="firstImageLoaded()" [hidden]="!getFirstImageSrc() || firstImageLoading" (click)="openImg(getFirstImageSrc())" src="{{getFirstImageSrc()}}" />
+        <img class="img-class" alt="Could not load image" (load)="secondImageLoaded()" [hidden]="!getSecondImageSrc() || secondImageLoading" (click)="openImg(getSecondImageSrc())" src="{{getSecondImageSrc()}}" />
+      </div>
     </div>
-  </mat-card-content>
+    <div class="content-container-right">
+      <mat-card-subtitle class="unselectable-content card-subtitle">
+        <span class="dekk-name card-header">{{getCardDekk()}}</span>
+        <span>
+          <span>
+            <i class="far fa-star pink-color-class card-options-icon" (click)="bookmarkToggle()" [hidden]="card.is_bookmarked"></i>
+            <i class="fas fa-star pink-color-class card-options-icon" (click)="bookmarkToggle()" [hidden]="!card.is_bookmarked"></i>
+          </span>
+          <span>
+            <!-- <mat-icon class="card-options-icon" [matMenuTriggerFor]="menu">more_vert</mat-icon> -->
+            <i class="fas fa-ellipsis-v card-options-icon" [matMenuTriggerFor]="menu"></i>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="rateDialog()">Feedback</button>
+          </mat-menu>
+          </span>
+        </span>
+      </mat-card-subtitle>
+      <mat-card-content class="content-item card-content">
+        <div class="content-item card-content-text unselectable-content" [innerHtml]="content"></div>
+      </mat-card-content>
+    </div>
+  </div>
   <mat-card-actions class="card-actions-container mobile-next-line">
-    <!-- <button mat-raised-button color="primary" class="card-action-button"> Highlight </button> -->
-    <button mat-raised-button color="primary" class="card-action-button" (click)="flipToBack()"> Flip To Back </button>
+    <button mat-stroked-button color="primary" class="card-action-button quarter-opacity-outline-themed" (click)="flipToBack()"> Flip To Back </button>
   </mat-card-actions>
 </mat-card>

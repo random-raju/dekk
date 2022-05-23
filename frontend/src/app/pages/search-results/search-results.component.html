@@ -1,6 +1,6 @@
 <div class="row search-results-container">
   <div>
-    <div>
+    <!-- <div>
       <form class="search-box-container" (ngSubmit)="submitSearch()">
         <mat-form-field class="mdc-checkbox__background search-box" >
           <mat-label>Enter Search Keywords</mat-label>
@@ -11,10 +11,15 @@
           <input type="submit" hidden />
         </mat-form-field>
       </form>
-    </div>
+    </div> -->
     <div [hidden]="!searchInitialLoading" class="loading-container">
       {{loadingText}}
       <mat-progress-bar class="loading-bar" mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="search-result-title-container">
+      <div class="highlight-color search-result-title" [hidden]="searchInitialLoading">
+        Search Results
+      </div>
     </div>
     <cdk-virtual-scroll-viewport class="search-results-list-container" minBufferPx="540" maxBufferPx="540" [hidden]="searchInitialLoading" itemSize="250" (scrolledIndexChange)="getNextBatch()">
       <div class="search-result-list" id="searchSuggestionsList">

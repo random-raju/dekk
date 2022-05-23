@@ -1,0 +1,97 @@
+<div [hidden]="!isLoading">
+    <app-loading></app-loading>
+</div>
+
+<div class="page-panel" [hidden]="isLoading">
+    <div class="side-padding-panel"></div>
+    <div class="middle-panel">
+        <mat-chip-list>
+            <mat-chip class="beige-color" color="primary" selected> Card 01 </mat-chip>
+        </mat-chip-list>
+        <div>
+            <mat-form-field class="input-text-form-field panel-with-margin-above" appearance="fill">
+                <mat-label>Title of the Card</mat-label>
+                <input matInput [(ngModel)]="cardName"
+                name="cardName"
+                type="text"/>
+            </mat-form-field>
+        </div>
+        <div class="dekk-tags-panel">
+            <mat-form-field class="select-class dropdown-field" appearance="fill">
+                <mat-label> {{newLabelPlaceholder}}Dekk Name </mat-label>
+                <mat-select [formControl]="dekks" (selectionChange)="onDekkSelected($event)">
+                    <mat-select-trigger>
+                        {{selectedDekk.tag_name}}
+                    </mat-select-trigger>
+                    <mat-option>
+                        <ngx-mat-select-search
+                            placeholderLabel="Select Dekks"
+                            noEntriesFoundLabel="No Dekks Found"
+                            ngModel
+                            (ngModelChange)="filterDekk($event)">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option [value]="dekk" *ngFor="let dekk of dekkOptions">
+                        {{dekk.tag_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="tags-container">
+                <mat-form-field class="select-class dropdown-field" appearance="fill">
+                    <mat-label> Add Tags </mat-label>
+                    <mat-select [formControl]="tags" multiple (selectionChange)="onTagSelected($event)">
+                        <mat-select-trigger>
+                            Tags Selected
+                            <!-- {{selectedDekk.tag_name}} -->
+                        </mat-select-trigger>
+                        <mat-option>
+                            <ngx-mat-select-search
+                                placeholderLabel="Select Tags"
+                                noEntriesFoundLabel="No Tags Found"
+                                ngModel
+                                (ngModelChange)="filterTags($event)">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option [value]="tag" *ngFor="let tag of tagOptions">
+                            {{tag.tag_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-chip-list>
+                    <mat-chip *ngFor="let tag of tags.value">
+                        {{tag.tag_name}} 
+                        <i class="far fa-times-circle remove-tag-icon" (click)="removeTag(tag)"></i>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+        </div>
+        <div class="editor-container">
+            <span class="editor-icon-panel">
+                <i class="fas fa-image editor-icon"></i>
+                <i class="fas fa-pen editor-icon" (click)="testHighlight()"></i>
+            </span>
+            <textarea class="card-editor" 
+            name="front-content" 
+            id="front-content" 
+            rows="6" 
+            placeholder="Front of the Card"
+            [(ngModel)]="frontContent"></textarea>
+        </div>
+        <div class="editor-container">
+            <span class="editor-icon-panel">
+                <i class="fas fa-image editor-icon"></i>
+                <i class="fas fa-pen editor-icon"></i>
+            </span>
+            <textarea class="card-editor" 
+            name="back-content" 
+            id="back-content" 
+            rows="6"
+            placeholder="Back of the Card"
+            [(ngModel)]="backContent"></textarea>
+        </div>
+        <div class="create-button-container">
+            <button mat-stroked-button class="create-button quarter-opacity-outline-themed" (click)="saveCard()">Create</button>
+        </div>
+    </div>
+    <div class="side-padding-panel"></div>
+</div>

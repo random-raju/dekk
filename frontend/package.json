@@ -1,7 +1,7 @@
 {
   "name": "dekk-new",
   "version": "0.0.0",
-  "scripts": { 
+  "scripts": {
     "ng": "ng",
     "start": "concurrently --kill-others npm:start-local npm:start-local-server",
     "start-local": "ng serve --proxy-config proxy.conf.json --port 4200",

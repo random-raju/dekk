@@ -129,7 +129,7 @@ export class StudyCardComponent implements OnInit, OnDestroy {
   }
 
   toggleFlip() {
-    this.flip = (this.flip == 'inactive') ? 'active' : 'inactive';
+    this.flip = (this.flip === 'inactive') ? 'active' : 'inactive';
   }
 
   getNextCard(): void {

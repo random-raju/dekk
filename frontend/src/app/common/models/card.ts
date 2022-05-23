@@ -15,4 +15,5 @@ export interface Card {
     dekk_name?: string;
     visited?: boolean;
     rightWrongMarked?: boolean;
+    is_bookmarked?: boolean;
 }

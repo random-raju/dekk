@@ -12,6 +12,12 @@
   padding: 30px;
 }
 
+.card-content-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .card-subtitle {
   display: flex;
   justify-content: space-between;
@@ -35,16 +41,17 @@
 }
 
 .card-action-button {
-  display: inline-block;
-  overflow: auto;
-  width: 30%;
-  margin: 5px;
+  // display: inline-block;
+  // overflow: auto;
+  // width: 30%;
+  // margin: 5px;
+  border-radius: 20px
 }
 
 .card-action-button-success {
   @extend .card-action-button;
-  background: lightgreen;
-  color: black;
+  // background: lightgreen;
+  color: lightgreen;
 }
 
 .card-action-button-warning {
@@ -85,8 +92,9 @@
 }
 
 .card-options-icon {
-  float: right;
+  // float: right;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .menu-item {
@@ -101,12 +109,14 @@
 
 .got-it-right-icon {
   margin-left: 10px;
+  color: lightgreen;
 }
 
 .img-container {
   display: flex;
   justify-content: center;
-  // height: clamp(5vh, 25vh, 30vh);
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
@@ -118,7 +128,16 @@
 }
 
 .img-first {
-  margin-right: 2vw;
+  margin-bottom: 2vw;
+}
+
+.content-container-right {
+  margin-left: 2vw;
+  width: 90%;
+}
+
+span {
+  font-size: 18px !important;
 }
 
 @media (max-width: 640px) {

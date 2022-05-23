@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, ViewChild } from '@angular/core';
@@ -19,7 +20,19 @@ import { UserService } from './common/services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('searchTrigger', [
+      state('active', style({
+        'max-width': '170px'
+      })),
+      state('inactive', style({
+        'max-width': '0'
+      })),
+      transition('active => inactive', animate('200ms ease-out')),
+      transition('inactive => active', animate('200ms ease-in'))
+    ])
+  ]
 })
 export class AppComponent {
 
@@ -30,6 +43,7 @@ export class AppComponent {
   title = 'dekk-new';
   isDarkThemeEnabled: boolean = true;
   sidebarOpened: boolean = false;
+  isSearchActive = 'inactive';
   listItems = [
     // { name: 'Website', link: UrlConstants.LANDING },
     { icon: 'home', name: 'Home', link: UrlConstants.HOME },
@@ -72,17 +86,17 @@ export class AppComponent {
   ngAfterViewInit() {
     this.overlay.classList.add("dark-theme-mode");
 
-    if (this.isLoggedIn()) {
-      this.observer.observe(['(max-width: 1300px)']).subscribe((res: BreakpointState) => {
-        if (res.matches) {
-          this.sidenav.mode = "over";
-          this.sidebarOpened = false;
-        } else {
-          this.sidenav.mode = "side";
-          this.sidebarOpened = true;
-        }
-      });
-    }
+    // if (this.isLoggedIn()) {
+    //   this.observer.observe(['(max-width: 1300px)']).subscribe((res: BreakpointState) => {
+    //     if (res.matches) {
+    //       this.sidenav.mode = "over";
+    //       this.sidebarOpened = false;
+    //     } else {
+    //       this.sidenav.mode = "side";
+    //       this.sidebarOpened = true;
+    //     }
+    //   });
+    // }
   }
 
   initialiseApp(): void {
@@ -99,7 +113,9 @@ export class AppComponent {
     
 
   submitSearch(searchString: any): void {
-    this.searchService.currentSearch = searchString;
+    // this.searchService.currentSearch = searchString;
+    const inputElement: any = document.getElementById('searchInput');
+    this.searchService.currentSearch = inputElement?.value;
     this.router.navigate(['/search-results']);
     if (this.router.url === UrlConstants.SEARCH_RESULTS) {
       this.searchSender.next({ searchString });
@@ -113,7 +129,7 @@ export class AppComponent {
   }
 
   goToCreateView(): void {
-    this.router.navigate([UrlConstants.CREATE]);
+    this.router.navigate([UrlConstants.CREATE_DEKK_CARD]);
   }
 
   isLoggedIn(): boolean {
@@ -121,10 +137,11 @@ export class AppComponent {
   }
     
   loginClicked(): void {
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-      data: {},
-      panelClass: 'filter-popup'
-    });
+    // const dialogRef = this.dialog.open(LoginDialogComponent, {
+    //   data: {},
+    //   panelClass: 'filter-popup'
+    // });
+    this.router.navigate([UrlConstants.LOGIN]);
   }
     
   signupClicked(): void {
@@ -163,5 +180,9 @@ export class AppComponent {
         // this.overlay.classList.add("light-theme-mode");
       }
     });
+  }
+
+  toggleSearch(): void {
+    this.isSearchActive = this.isSearchActive === 'active' ? 'inactive' : 'active';
   }
 }

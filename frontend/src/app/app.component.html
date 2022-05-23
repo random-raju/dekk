@@ -1,21 +1,24 @@
 <!-- Toolbar -->
 <div [ngClass]="{'dark-theme-mode': isDarkThemeEnabled}" class="mat-app-background background">
-  <div color="primary" class="toolbar head-toolbar" role="banner">
+  <div color="primary" class="toolbar head-toolbar toolbar-themed" role="banner">
     <div class="toolbar-overlay" [hidden]="!isDarkThemeEnabled"></div>
     <div class="left-toolbar">
       <img src="assets/dark-logo-full.png" class="logo-placement menu-icon" [hidden]="isDarkThemeEnabled" (click)="goToHomePage()" />
       <img src="assets/light-logo-full.png" class="logo-placement menu-icon" [hidden]="!isDarkThemeEnabled" (click)="goToHomePage()" />
-      <!-- <span class="left-toolbar-block">
-        <mat-icon class="menu-icon" matTooltip="Menu" [hidden]="!isLoggedIn()" (click)="sidebarOpened=!sidebarOpened">menu</mat-icon>
-        <span class="padded-toolbar-component dekk-header-name" (click)="goToHomePage()">Dekk</span>
-      </span> -->
-      <button mat-stroked-button class="toolbar-button quarter-opacity-outline-themed" color="accent" (click)="goToStudy()">Study</button>
-      <mat-search-bar
+      <button mat-stroked-button [hidden]="!isLoggedIn()" class="toolbar-button icon-img-base menu-icon quarter-opacity-outline-themed small-screen-hide" color="accent" (click)="goToStudy()">Study</button>
+      <!-- <mat-search-bar
         (onEnter)="submitSearch($event)"
         matTooltip="Search"
         class="search-input color-themed"
         direction="right"
-        [hidden]="!isLoggedIn()"></mat-search-bar>
+        [hidden]="!isLoggedIn()"></mat-search-bar> -->
+      <span class="vertical-center menu-icon" [hidden]="!isLoggedIn()" [ngClass]="{'toolbar-search-border': isSearchActive === 'active'}"> <!-- search-container-themed -->
+        <form class="vertical-center" (submit)="submitSearch($event)">
+          <mat-icon class="color-themed left-toolbar-block" (click)="toggleSearch()">search</mat-icon>
+          <input [@searchTrigger]="isSearchActive" class="search-click" placeholder="Enter your search term..." type="search" value="" name="search" id="searchInput" />
+		      <input hidden class="sb-search-submit" type="submit" value="" />
+       </form>
+      </span>
     </div>
     <div class="head-toolbar-center" [hidden]="isLoggedIn()">
       <button mat-button (click)="goToAboutUs()">About Us</button>
@@ -24,53 +27,41 @@
     </div>
     <div class="head-toolbar-right">
       <div [hidden]="isLoggedIn()">
-        <button mat-button color="accent" (click)="loginClicked()">Sign In</button>
-        <!-- <button mat-button (click)="signupClicked()">Register</button> -->
+        <button mat-button (click)="loginClicked()">Sign In</button>
       </div>
-      <!-- <mat-search-bar
-        (onEnter)="submitSearch($event)"
-        matTooltip="Search"
-        class="search-input"
-        [hidden]="!isLoggedIn()"></mat-search-bar> -->
-      <!-- <mat-icon [hidden]="!isLoggedIn()" class="search-icon" matTooltip="Create" (click)="goToCreateView()">add</mat-icon> -->
-      <!-- <mat-icon [hidden]="!isLoggedIn()" class="search-icon" matTooltip="Log Out" (click)="logout()">power_settings_new</mat-icon> -->
-      <button mat-stroked-button class="toolbar-button menu-icon quarter-opacity-outline-themed" color="accent" (click)="goToCreateView()">Create</button>
-      <mat-icon [hidden]="!isLoggedIn()" class="search-icon menu-icon color-themed" color="accent" [matMenuTriggerFor]="menu">person</mat-icon>
-      <mat-menu #menu="matMenu" class="menu-background">
-        <button mat-menu-item class="menu-item">Account</button>
-        <button mat-menu-item class="menu-item">Settings</button>
-        <button mat-menu-item class="menu-item">Bookmarks</button>
-        <mat-divider class="divider-class"></mat-divider>
-        <button mat-menu-item class="menu-item">About</button>
-        <button mat-menu-item class="menu-item">Why Dekk</button>
-        <mat-divider class="divider-class"></mat-divider>
-        <button mat-menu-item class="menu-item">Log Out</button>
-      </mat-menu>
+      <button mat-stroked-button [hidden]="!isLoggedIn()" class="toolbar-button menu-icon quarter-opacity-outline-themed small-screen-hide" color="accent" (click)="goToCreateView()">Create</button>
       <span [hidden]="!isLoggedIn()" class="dark-light-toggle padded-toolbar-component">
-        <mat-slide-toggle matTooltip="Dark Mode Toggle" (click)="toggle()" [(ngModel)]="isDarkThemeEnabled">
+        <mat-slide-toggle class="small-screen-hide dark-light-toggle" matTooltip="Dark Mode Toggle" (click)="toggle()" [(ngModel)]="isDarkThemeEnabled">
         </mat-slide-toggle>
+        <!-- <div class="img-icon mode-icon-light-in-dark-mode menu-icon" (click)="toggle()" [hidden]="!isDarkThemeEnabled"></div>
+        <div class="img-icon mode-icon-dark-in-light-mode menu-icon" (click)="toggle()" [hidden]="isDarkThemeEnabled"></div> -->
       </span>
+      <!-- <mat-icon [hidden]="!isLoggedIn()" class="search-icon menu-icon color-themed" color="accent" [matMenuTriggerFor]="menu">person</mat-icon> -->
+      <!-- <img src="assets/user-icon-light.svg" class="img-icon img-icon-light-in-dark-mode menu-icon" [hidden]="!isDarkThemeEnabled || !isLoggedIn()" [matMenuTriggerFor]="menu" />
+      <img src="assets/user-icon-dark.svg" class="img-icon img-icon-dark-in-light-mode menu-icon" [hidden]="isDarkThemeEnabled || !isLoggedIn()" [matMenuTriggerFor]="menu" /> -->
+      <div class="img-icon img-icon-light-in-dark-mode menu-icon" [hidden]="!isDarkThemeEnabled" [matMenuTriggerFor]="menu"></div>
+      <div class="img-icon img-icon-dark-in-light-mode menu-icon" [hidden]="isDarkThemeEnabled" [matMenuTriggerFor]="menu"></div>
+      <mat-menu #menu="matMenu" class="menu-background menu-style">
+        <button mat-menu-item [hidden]="!isLoggedIn()" class="menu-item">Account</button>
+        <button mat-menu-item [hidden]="!isLoggedIn()" class="menu-item">Settings</button>
+        <button mat-menu-item [hidden]="!isLoggedIn()" class="menu-item">Bookmarks</button>
+        <mat-divider [hidden]="!isLoggedIn()" class="divider-themed divider-class"></mat-divider>
+        <button mat-menu-item class="menu-item" (click)="goToAboutUs()">About</button>
+        <button mat-menu-item class="menu-item" (click)="goToWhyDekk()">Why Dekk</button>
+        <mat-divider [hidden]="!isLoggedIn()" class="divider-themed divider-class"></mat-divider>
+        <button [hidden]="!isLoggedIn()" mat-menu-item class="menu-item" (click)="logout()">Log Out</button>
+      </mat-menu>
     </div>
-    
   </div>
-  <mat-sidenav-container class="app-background">
-    <mat-sidenav [(opened)]="sidebarOpened" mode="side">
-      <mat-nav-list>
-        <a mat-list-item routerLink="{{listItem.link}}" *ngFor="let listItem of listItems" (click)="handleSidenavClick()">
-          <mat-icon>{{listItem.icon}}</mat-icon>
-          <span class="sidebar-item">{{listItem.name}}</span>
-        </a>
-      </mat-nav-list>
-      <mat-divider></mat-divider>
-      <mat-nav-list>
-        <a mat-list-item routerLink="{{listItem.link}}" *ngFor="let listItem of listItemsBelowDivider" (click)="handleSidenavClick()">
-          <mat-icon>{{listItem.icon}}</mat-icon>
-          <span class="sidebar-item">{{listItem.name}}</span>
-        </a>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <router-outlet></router-outlet>
+  <mat-toolbar class="footer-class footer-themed row">
+    <div class="footer-left">
+      <div class="footer-entry menu-icon footer-left" (click)="goToAboutUs()">About</div>
+      <div class="footer-entry menu-icon" (click)="goToWhyDekk()">Why Dekk</div>
+    </div>
+    <div class="footer-right">
+      <i class="footer-icon fab fa-instagram menu-icon"></i>
+      <i class="footer-icon menu-icon fab fa-linkedin-in menu-icon"></i>
+    </div>
+  </mat-toolbar>
 </div>

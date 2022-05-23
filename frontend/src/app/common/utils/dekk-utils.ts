@@ -1,3 +1,4 @@
+import { Dekk } from "../models/dekk";
 import { DekkMetadata } from "../models/dekk-metadata";
 
 export class DekkUtils {
@@ -7,5 +8,11 @@ export class DekkUtils {
             dekk_name: '',
             cards: []
         };
+    }
+
+    public static getEmptyDekk(): Dekk {
+        return {
+            tag_name: ''
+        } as Dekk;
     }
 }

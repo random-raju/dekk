@@ -1,12 +1,18 @@
 @import 'custom-theme.scss';
 @import "~animate.css/animate.css";
 @import '~ngx-bar-rating/themes/br-default-theme';
+// @import 'node_modules/angular-text-input-highlight/text-input-highlight.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%; width: 100%;}
+body { margin: 0; font-family: Poppins-Light, Roboto, "Helvetica Neue", sans-serif !important; }
 
 mark {
     background-color: #f3f57f;
+}
+
+@font-face {
+    font-family: Poppins-Light;
+    src: url(assets/Poppins-Light.ttf) format("opentype");
 }
 
 .unselectable-content {
@@ -17,9 +23,12 @@ mark {
     -ms-user-select: none;
     user-select: none;
     cursor: default;
+    font-size: 18px;
+    line-height: 1.8;
 }
 
-mat-card {
+mat-card, h2 {
+    font-family: Poppins-Light !important;
     border-radius: 20px !important;
 }
 
@@ -33,4 +42,193 @@ mat-search-bar {
     input {
         transform: rotateY(180deg);
     }
+
+    mat-icon {
+        transform: rotateY(180deg) !important;
+    }
+}
+
+// mat-tab-header {
+//     div.div.div.div.div[selected="true"] {
+//         color: $pink-color;
+//     }
+// }
+
+div[role="tab"][aria-selected="true"] {
+    color: $pink-color;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.mat-menu-panel {
+    min-width: 200px;
+    width: 250px;
+}
+
+.mat-menu-item:hover {
+    color: $pink-color !important;
+}
+
+.mat-card:hover {
+    .each-dekk-title {
+        color: $pink-color !important;
+    }
+}
+
+.menu-style {
+    border-radius: 10px !important;
+}
+
+input {
+    background: transparent !important;
+}
+
+.mat-option:hover, .mat-option:focus {
+    color: $pink-color !important;
+
+    span.mat-option-text {
+        color: $pink-color !important;
+    }
+}
+
+app-study-session {
+    div.fitting-height mat-accordion:not(:first-child), div.fitting-height mat-accordion:not(:last-child) {
+        mat-expansion-panel {
+            border-radius: 0px !important;
+        }
+    }
+
+    div.fitting-height mat-accordion:last-child {
+        mat-expansion-panel {
+            border-radius: 0px 0px 20px 20px !important;
+        }
+    }
+
+    div.fitting-height mat-accordion:first-child {
+        mat-expansion-panel {
+            border-radius: 20px 20px 0px 0px !important;
+        }
+    }
+
+    .mat-checkbox-frame {
+        border-color: transparent !important;
+    }
+
+    .mat-checkbox-background {
+        border-radius: 8px !important;
+        border: 2px solid $pink-color !important;
+    }
+
+    .mat-checkbox-checked {
+        background: transparent !important;
+    }
+
+    .mat-expansion-indicator::after {
+        color: $pink-color !important;
+    }
+}
+
+app-create-dekk-card {
+    .mat-form-field-flex {
+        border-radius: 10px !important;
+    }
+
+    .mat-form-field-underline {
+        width: 0;
+    }
+
+    .mat-select-arrow {
+        color: $pink-color !important;
+    }
+
+    .mat-chip {
+        background-color: $pink-color !important;
+        color: $beige-color !important;
+    }
+
+    mat-form-field.ng-dirty {
+        .mat-form-field-flex {
+            background-color: $pink-color !important;
+            color: $beige-color;
+        }
+
+        .mat-select-arrow {
+            color: $beige-color !important;
+        }
+
+        .mat-form-field-label {
+            color: $beige-color !important;
+        }
+
+        .mat-select-value {
+            color: $beige-color;
+        }
+    }
+}
+
+app-search-result {
+    .mat-chip {
+        background-color: transparent !important;
+        border: 1px solid $pink-color;
+    }
+}
+
+.beige-color {
+    color: $beige-color !important;
+}
+
+.mat-tab-body-content {
+    height: auto !important;
+}
+
+.highlight-color {
+    color: $pink-color;
+}
+
+.highlight-border {
+    border: 1px solid $pink-color;
+}
+
+.no-click-pointer {
+    cursor: none;
+}
+
+app-dekk-with-cards-edit-view {
+    .dekk-title {
+        background: $pink-color;
+        border-radius: 10px;
+        color: $beige-color;
+        padding: 5px 10px 5px 10px;
+        width: fit-content;
+        margin-bottom: 2vh;
+    }
+}
+
+app-sign-up, app-login {
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .mat-form-field-flex {
+        padding: 0 20px 0 20px;
+        border-radius: 20px;
+    }
+
+    .mat-focused {
+        .mat-form-field-wrapper {
+            .mat-form-field-flex {
+                padding: 0 20px 0 20px;
+                border: 1px solid $pink-color;
+                border-radius: 20px;
+            }
+        }
+    }
+
+    .mat-input-element {
+        width: 100% !important;
+    }
+}
+
+.pink-color-class {
+    color: $pink-color !important;
 }

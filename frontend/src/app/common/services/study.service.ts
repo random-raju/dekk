@@ -244,6 +244,7 @@ export class StudyService {
         return this.getHighlightedContent(this.dekkCards[this.currentCardIndex]?.content_on_front);
     }
 
+    // TBD: should view card be called here? Like when the card is flipped.
     getHighlightedCardBack(): string {
         return this.getHighlightedContent(this.dekkCards[this.currentCardIndex]?.content_on_back);
     }
@@ -271,13 +272,17 @@ export class StudyService {
     }
 
     getCurrentCard(): Card {
-        if (this.dekkCards.length > 0 && this.currentCardIndex > -1) {
+        if (this.dekkCards?.length > 0 && this.currentCardIndex > -1) {
             const card = this.dekkCards[this.currentCardIndex];
             if (!card.visited) {
                 ++ this.totalCardsStudied;
             }
             card.visited = true;
             card.image_links = card.image_links ?? [];
+            if (card.card_id) {
+                this.markCardAsRead(card);
+            }
+            card.is_bookmarked = !!card.is_bookmarked; // setting this to false in case it is not set
             return card;
         }
         return CardUtils.getDummyCard();
@@ -288,5 +293,27 @@ export class StudyService {
             ++ this.rightCards;
         }
         this.dekkCards[this.currentCardIndex].rightWrongMarked = true;
+    }
+
+    markCardAsRead(card: Card): void {
+        if (card?.visited) {
+            return;
+        }
+        const urlParams = card?.card_id ? '/' + card?.card_id : '';
+        this.httpClientService.get(UrlConstants.VIEW_CARD + urlParams).subscribe(() => {});
+    }
+
+    bookmark(card: Card): void {
+        const urlParams = card.card_id ? '/' + card.card_id : '';
+        this.httpClientService.get(UrlConstants.BOOKMARK_CARD + urlParams).subscribe(() => {
+            card.is_bookmarked = true;
+        });
+    }
+
+    unbookmark(card: Card): void {
+        const urlParams = card?.card_id ? '/' + card.card_id : '';
+        this.httpClientService.get(UrlConstants.UNBOOKMARK_CARD + urlParams).subscribe(() => {
+            card.is_bookmarked = false;
+        });
     }
 }

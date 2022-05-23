@@ -3,9 +3,10 @@
     justify-content: space-between;
     // cursor: pointer;
     height: fit-content;
-    margin: 10px;
+    // margin: 10px;
     // background: transparent;
     // border: 0.5px solid;
+    margin-bottom: 2vh;
 }
 
 .icon-container {
@@ -22,7 +23,7 @@
 }
 
 .content-container {
-    width: 70vw;
+    width: 95%;
 }
 
 .content-item {
@@ -33,6 +34,20 @@
     height: fit-content;
     margin-bottom: 10px;
     line-height: 1.1;
+}
+
+.each-card-dekk-name {
+    width: fit-content;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.each-card-first-content {
+    margin-top: 10px;
+}
+
+.each-card-dekk-content {
+    padding: 0 10px 0 10px;
 }
 
 @media (max-width: 767px) {

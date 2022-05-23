@@ -26,11 +26,17 @@ export class UrlConstants {
   public static DELETE_CARD_URL = UrlConstants.BASE_URL + '/card';
   public static GET_COLLEGES_URL = UrlConstants.BASE_URL + '/resources/colleges';
   public static CREATE_SUBDEKK_URL = UrlConstants.BASE_URL + '/subdekk';
+  public static VIEW_CARD = UrlConstants.BASE_URL + '/view/card';
+  public static BOOKMARK_CARD = UrlConstants.BASE_URL + '/bookmark/card';
+  public static UNBOOKMARK_CARD = UrlConstants.BASE_URL + '/unmark/card';
 
   // Routing URLs
   public static SEARCH_RESULTS = '/search-results';
+  public static SIGN_UP = '/sign-up';
+  public static LOGIN = '/login';
   public static HOME = '/home';
   public static CREATE = '/create';
+  public static CREATE_DEKK_CARD = '/create-dekk-card';
   public static CREATE_SUBDEKK = '/create-subdekk';
   public static STUDY_CARD = '/study-card';
   public static DEKK_EDIT_VIEW = '/dekk-edit-view';

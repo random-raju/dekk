@@ -1,55 +1,46 @@
-<div class="row home-banner-container home-banner-container-colour">
-    <div></div>
-    <div>
-        <div class="home-banner"><h1> Welcome to Dekk </h1></div>
-        <div class="home-banner"> Your One-Stop Study Shop </div>
+<div>
+    <div style="height: 100%; width: 100%;" [hidden]="!isLoading">
+        <!-- <app-loading></app-loading> -->
     </div>
-    <div class="home-banner"> Browse Featured Dekks Here </div>
-</div>
-<div class="row">
-    <div [hidden]="!isLoading">
-        <app-loading></app-loading>
-    </div>
-    <div class="selected-master-dekk" [hidden]="isLoading || selectedMasterDekkId"><h1> Curated Dekks </h1></div>
-    <div class="selected-master-dekk" [hidden]="!selectedMasterDekkId || isLoading"><h1> {{ selectedMasterDekk.dekk_name }} </h1></div>
-    <div class="col-md-3 col-sm-4 col-6" [hidden]="isLoading" *ngFor="let dekk of dekks">
-        <mat-card class="each-dekk dekk-effect" (click)="selectDekk(dekk.tag_id)">
-            <span class="home-card-icon">
-                <mat-icon [hidden]="!dekk.is_owner || selectedMasterDekkId">edit</mat-icon>
-                <mat-icon [hidden]="!dekk.is_owner || !selectedMasterDekkId" (click)="editDekk(dekk)">edit</mat-icon>
-            </span>
-            <mat-card-title class="each-dekk-title">
-                <!-- <span></span> -->
-                <!-- <span> -->
-                    <h2> {{dekk.tag_name}} </h2>
-                <!-- </span> -->
-                <!-- <span class="home-card-icon"><mat-icon>edit</mat-icon></span> -->
-            </mat-card-title>
-            <mat-card-content class="each-dekk-content"> {{dekk.total_cards}} Cards </mat-card-content> 
-            <span></span>
-        </mat-card>
-    </div>
-    <div [hidden]="isLoading || !dekks[0].is_owner || !selectedMasterDekkId">
-        <button mat-raised-button (click)="createSubdekk()">
-            Create Subdekk
-        </button>
-    </div>
-    <mat-divider class="divider-class" [hidden]="isLoading || personalDekks.length === 0"></mat-divider>
-    <div class="selected-master-dekk" [hidden]="isLoading || personalDekks.length === 0 || selectedMasterDekkId"><h1> My Dekks </h1></div>
-    <div class="col-md-3 col-sm-4 col-6" [hidden]="isLoading || personalDekks.length === 0 || selectedMasterDekkId" *ngFor="let dekk of personalDekks">
-        <mat-card class="each-dekk dekk-effect" (click)="editDekk(dekk)">
-            <span class="home-card-icon" (click)="editDekk(dekk)">
-                <mat-icon>edit</mat-icon>
-            </span>
-            <mat-card-title class="each-dekk-title">
-                <!-- <span></span> -->
-                <!-- <span> -->
-                    <h2> {{dekk.tag_name}} </h2>
-                <!-- </span> -->
-                <!-- <span class="home-card-icon"><mat-icon>edit</mat-icon></span> -->
-            </mat-card-title>
-            <mat-card-content class="each-dekk-content"> {{dekk.total_cards}} Cards </mat-card-content> 
-            <span></span>
-        </mat-card>
-    </div>
+    <div class="toolbar-overlay"></div>
+    <div class="toolbar-overlay"></div>
+    <mat-tab-group #dekkTabs mat-stretch-tabs class="color-themed">
+        <mat-tab label="Curated Dekks"> 
+            <div style="height: 100%; width: 100%;" [hidden]="!isLoading">
+                <app-loading></app-loading>
+            </div>
+            <div class="selected-master-dekk color-themed-solid" [hidden]="!selectedMasterDekkId || isLoading"> {{ selectedMasterDekk.dekk_name }} </div>
+            <div class="row dekk-list-panel">
+                <div class="col-md-3 col-sm-4 col-6" [hidden]="isLoading" *ngFor="let dekk of dekks">
+                    <mat-card class="each-dekk dekk-effect" (click)="selectDekk(dekk.tag_id)">
+                        <span class="home-card-icon">
+                            <mat-icon [hidden]="!dekk.is_owner || selectedMasterDekkId">edit</mat-icon>
+                            <mat-icon [hidden]="!dekk.is_owner || !selectedMasterDekkId" (click)="editDekk(dekk)">edit</mat-icon>
+                        </span>
+                        <mat-card-title class="each-dekk-title">
+                            <h2> {{dekk.tag_name}} </h2>
+                        </mat-card-title>
+                        <mat-card-content class="each-dekk-content"> {{dekk.total_cards}} Cards </mat-card-content> 
+                        <span></span>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="My Dekks">
+            <div class="row dekk-list-panel">
+                <div class="col-md-3 col-sm-4 col-6" [hidden]="isLoading" *ngFor="let dekk of personalDekks">
+                    <mat-card class="each-dekk dekk-effect" (click)="selectSubDekk(dekk.tag_id)">
+                        <span class="home-card-icon" (click)="editDekk(dekk)">
+                            <mat-icon>edit</mat-icon>
+                        </span>
+                        <mat-card-title class="each-dekk-title">
+                            <h2> {{dekk.tag_name}} </h2>
+                        </mat-card-title>
+                        <mat-card-content class="each-dekk-content"> {{dekk.total_cards}} Cards </mat-card-content> 
+                        <span></span>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>

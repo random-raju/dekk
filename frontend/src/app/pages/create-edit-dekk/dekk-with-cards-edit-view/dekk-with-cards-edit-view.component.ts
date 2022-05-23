@@ -22,7 +22,7 @@ export class DekkWithCardsEditViewComponent implements OnInit {
 
   routeListener: Subscription;
 
-  displayedColumns = ["card", "action"];
+  displayedColumns = ["card", "preview", "action"];
   dekkRating: number;
   dekkFeedback: string;
   currentDekkId: string;

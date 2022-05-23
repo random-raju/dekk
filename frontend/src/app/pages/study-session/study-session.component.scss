@@ -6,13 +6,14 @@
 }
 
 .large-font-container {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 3vh;
+    // text-align: center;
+    // font-weight: bold;
+    // margin-bottom: 3vh;
+    margin-left: 3vw;
 }
 
 .large-font {
-    font-size: 8vh;
+    font-size: 5vh;
     font-weight: bolder;
     margin: 0px;
     line-height: 15vh;
@@ -49,8 +50,9 @@ mat-panel-description {
 .count-and-checkbox-class {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     // font-weight: bold;
+    width: 100%;
 }
 
 .input-label {
@@ -79,8 +81,29 @@ mat-panel-description {
 }
 
 .mat-form-container {
-    margin-top: 5vh;
-    margin-bottom: 2vh;
+    // margin-top: 5vh;
+    // margin-bottom: 2vh;
+}
+
+.submit-button {
+    margin-bottom: 80px; // approx as footer is 64px
+    border-radius: 20px;
+}
+
+.panel-title {
+    width: 25vw;
+}
+
+.panel-description {
+    width: 30vw;
+}
+
+.expansion-panel {
+    box-shadow: none !important;
+}
+
+.child-panel-header {
+    padding-left: 0px !important;
 }
 
 @media (max-width: 350px) {
@@ -90,5 +113,22 @@ mat-panel-description {
     
     .input-label-when-small {
         display: flex;
+    }
+}
+
+@media (max-width: 447px) {
+    .large-font {
+        font-size: 5vh;
+        font-weight: bolder;
+        margin: 0px;
+        line-height: 8vh;
+    }
+
+    .count-and-checkbox-class {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // font-weight: bold;
+        width: 100px;
     }
 }

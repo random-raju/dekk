@@ -19,14 +19,18 @@ export class SearchResultComponent implements OnInit, OnChanges {
 
   ngOnInit(): void { }
 
+  // TODO: fix dekk name and tags logic. not getting any tags??
+  // TODO: highlighted content also not coming back. do highlight logic
   ngOnChanges() {
-    this.card.dekk_name = this.getTags()
-      .filter((tag: string) => { return this.card.tags[tag] === 1 })
-      .join(', ');
+    // this.card.dekk_name = this.getTags()
+    //   .filter((tag: string) => { return this.card.tags[tag] === 1 })
+    //   .join(', ');
+    this.card.dekk_name = 'Placeholder Dekk Name';
   }
 
   getTags(): string[] {
-    return _.keys(this.card.tags);
+    // return _.keys(this.card.tags);
+    return ['Placeholder tag 1', 'Placeholder tag 2'];
   }
 
   openCard(): void {

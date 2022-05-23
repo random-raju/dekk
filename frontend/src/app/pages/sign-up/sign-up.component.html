@@ -1,77 +1,54 @@
-<!-- 
-<div class="row sign-up-page">
-    <div class="sign-up-container">
-        <mat-card class="sign-up-card">
-            <mat-card-content class="sign-up-card-content">
-                <div class="left-side-card-content">
-                    <h2> Welcome Back </h2>
-                    <p> We are happy to see you again!</p>
-                    <div class="left-side-card-item">
-                        <span>
-                            <mat-icon>vpn_key</mat-icon>
-                        </span>
-                        <span>
-                            <mat-icon>lock_open</mat-icon>
-                        </span>
-                    </div>
-                    <p class="left-side-card-item"> Sign up to continue studying optimally. </p>
-                </div>
-                <div class="right-side-card-content lighter-mat-card">
-                    <h2>Sign Up</h2>
-                    <div class="input-field">
-                        <span class="input-label"> Email ID * </span>
-                        <mat-form-field class="input-form-field">
-                            <p class="input-label-when-small"> Email ID * </p>
-                            <input matInput class="search-input" [(ngModel)]="email" name="email" required>
-                        </mat-form-field>
-                    </div>
-                    <div class="input-field">
-                        <span class="input-label"> User Name * </span>
-                        <mat-form-field class="input-form-field">
-                            <p class="input-label-when-small"> User Name * </p>
-                            <input matInput class="search-input" [(ngModel)]="username" name="username" required>                        
-                        </mat-form-field>
-                    </div>
-                    <div class="input-field">
-                        <span class="input-label"> Password * </span>
-                        <mat-form-field class="input-form-field">
-                            <p class="input-label-when-small"> Password* </p>
-                            <input matInput class="search-input" [(ngModel)]="password"type="password" name="password" required>
-                        </mat-form-field>
-                    </div>
-                    <button mat-raised-button (click)="signUp()" color="primary">Sign Up</button>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<div [hidden]="!isLoading">
+    <app-loading></app-loading>
 </div>
--->
-
-<div class="row sign-up-page">
-    <div class="left-side-card-content">
-        <h2> Welcome Back </h2>
-        <p> We are happy to see you again!</p>
-        <div class="left-side-card-item">
-            <span>
-                <mat-icon>vpn_key</mat-icon>
-            </span>
-            <span>
-                <mat-icon>lock_open</mat-icon>
-            </span>
+<div class="card-container">
+    <mat-card class="card-content">
+        <h2>Sign Up</h2>
+        <div [hidden]="!signUpError" class="sign-up-error">
+            Registration failed. Please check the fields you have entered.
         </div>
-        <p class="left-side-card-item"> Sign up to continue studying optimally. </p>
-    </div>
-    <div class="right-side-card-content" style="background: blue;">
-        <h2> Welcome Back </h2>
-        <p> We are happy to see you again!</p>
-        <div class="left-side-card-item">
-            <span>
-                <mat-icon>vpn_key</mat-icon>
-            </span>
-            <span>
-                <mat-icon>lock_open</mat-icon>
-            </span>
+        <div [hidden]="!loginError" class="sign-up-error">
+            Registration successful. Please login to continue.
         </div>
-        <p class="left-side-card-item"> Sign up to continue studying optimally. </p>
-    </div>
+        <div class="input-field">
+            <span class="input-label"> Email ID * </span>
+            <mat-form-field class="input-form-field">
+                <p class="input-label-when-small"> Email ID * </p>
+                <input matInput class="search-input" [(ngModel)]="email" name="email" required>
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <span class="input-label"> Name * </span>
+            <mat-form-field class="input-form-field">
+                <p class="input-label-when-small"> Name * </p>
+                <input matInput class="search-input" [(ngModel)]="name" name="name" required>                        
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <span class="input-label"> User Name * </span>
+            <mat-form-field class="input-form-field">
+                <p class="input-label-when-small"> User Name * </p>
+                <input matInput class="search-input" [(ngModel)]="username" name="username" required>                        
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <span class="input-label"> Password * </span>
+            <mat-form-field class="input-form-field">
+                <p class="input-label-when-small"> Password* </p>
+                <input matInput class="search-input" [(ngModel)]="password"type="password" name="password" required>
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <span class="input-label"> College * </span>
+            <mat-form-field class="input-form-field">
+                <p class="input-label-when-small"> College * </p>
+                <mat-select [(value)]="selectedCollege">
+                    <mat-option [value]="college" *ngFor="let college of collegeService.collegeList">
+                        {{college}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <button mat-stroked-button class="quarter-opacity-outline-themed sign-up-button" (click)="signUp()" color="primary">Sign Up</button>
+    </mat-card>
 </div>

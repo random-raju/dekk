@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UrlConstants } from 'src/app/common/constants/url.constants';
+import { HttpClientService } from 'src/app/common/services/http-client.service';
+import { UserService } from 'src/app/common/services/user.service';
+import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'app-login',
@@ -8,19 +12,32 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  username: string;
+  email: string;
   password: string;
+  loginError = false;
+  isLoading = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private httpClientService: HttpClientService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
   }
 
-  login() : void {
-    if(this.username == 'admin' && this.password == 'admin'){
-      this.router.navigate(["search-results"]);
-    } else {
-      alert("Invalid credentials");
-    }
+  login(): void {
+    const loginReq = {
+      email: this.email,
+      password: Md5.hashStr(this.password)
+    };
+    this.isLoading = true
+    this.httpClientService.postWithoutAuth(UrlConstants.LOGIN_URL, loginReq)
+      .subscribe((response: any) => {
+        this.loginError = false;
+        this.userService.loginSuccessful(response?.auth_token);
+        this.router.navigate([UrlConstants.HOME]);
+    }, (error: any) => { // TODO: Differentiate between errors
+      this.loginError = true;
+      this.isLoading = false;
+    });
   }
 }

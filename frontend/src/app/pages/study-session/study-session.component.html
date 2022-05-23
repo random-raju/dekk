@@ -2,11 +2,11 @@
   <app-loading></app-loading>
 </div>
 
-<div class="row full-page-container" [hidden]="isLoading">
+<div class="full-page-container" [hidden]="isLoading">
   <div class="col-1 fitting-height"></div>
   <div class="col-10 fitting-height">
       <div class="large-font-container">
-          <p class="large-font">Customize Your Study Session</p>
+          <p class="large-font">Customize Your Study Session <mat-icon>info</mat-icon> </p>
       </div>
   </div>
   <div class="col-1 fitting-height"></div>
@@ -17,15 +17,16 @@
                                 (closed)="panelOpenStates[dekkDetail.dekk_id] = false"
                                 [hideToggle]="disableExpand(dekkDetail)"
                                 [ngClass]="{'disable-expand': disableExpand(dekkDetail)}"
+                                class="expansion-panel"
                                 [expanded]="panelOpenStates[dekkDetail.dekk_id]">
             <mat-expansion-panel-header>
-              <mat-panel-title>
+              <mat-panel-title class="col-3">
                 {{dekkDetail.dekk_name}}
               </mat-panel-title>
-              <mat-panel-description>
+              <mat-panel-description class="col-5">
                 <!-- Currently I am {{panelOpenStates[dekkDetail.id] ? 'open' : 'closed'}} -->
                 <div class="count-and-checkbox-class">
-                  {{dekkDetail.cards_count}}
+                  {{dekkDetail.cards_count}} Cards
                   <mat-checkbox class="checkbox-class"
                     [color]="'primary'"
                     [checked]="dekkDetail.selected"
@@ -41,14 +42,15 @@
                                     (closed)="panelOpenStates[subDekkDetail.tag_id] = false"
                                     [hideToggle]="disableExpand(subDekkDetail)"
                                     [ngClass]="{'disable-expand': disableExpand(subDekkDetail)}"
+                                    class="expansion-panel"
                                     [expanded]="panelOpenStates[subDekkDetail.tag_id]">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
+                <mat-expansion-panel-header class="child-panel-header">
+                  <mat-panel-title class="col-3">
                     {{subDekkDetail.tag_name}}
                   </mat-panel-title>
-                  <mat-panel-description>
+                  <mat-panel-description class="col-5">
                     <div class="count-and-checkbox-class">
-                      {{subDekkDetail.cards_count}}
+                      {{subDekkDetail.cards_count}} Cards
                       <mat-checkbox class="checkbox-class"
                         [color]="'primary'"
                         [checked]="subDekkDetail.selected"
@@ -60,14 +62,14 @@
                 </mat-expansion-panel-header>
                 <mat-accordion class="each-master-dekk" [togglePosition]="'before'" 
                     *ngFor="let subSubDekkDetail of subDekkDetail.sub_topics">
-                    <mat-expansion-panel hideToggle class="disable-expand">
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
+                    <mat-expansion-panel hideToggle class="disable-expand expansion-panel child-panel-header">
+                      <mat-expansion-panel-header class="child-panel-header">
+                        <mat-panel-title class="col-3">
                           {{subSubDekkDetail.tag_name}}
                         </mat-panel-title>
-                        <mat-panel-description>
+                        <mat-panel-description class="col-5">
                           <div class="count-and-checkbox-class">
-                            {{subSubDekkDetail.cards_count}}
+                            {{subSubDekkDetail.cards_count}} Cards
                             <mat-checkbox class="checkbox-class"
                               [color]="'primary'"
                               [checked]="subSubDekkDetail.selected"
@@ -91,14 +93,15 @@
                             (closed)="panelOpenStates[subDekkDetail.tag_id] = false"
                             [hideToggle]="disableExpand(subDekkDetail)"
                             [ngClass]="{'disable-expand': disableExpand(subDekkDetail)}"
+                            class="expansion-panel"
                             [expanded]="panelOpenStates[subDekkDetail.tag_id]">
         <mat-expansion-panel-header>
-          <mat-panel-title>
+          <mat-panel-title class="col-3">
             {{subDekkDetail.tag_name}}
           </mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description class="col-5">
             <div class="count-and-checkbox-class">
-              {{subDekkDetail.cards_count}}
+              {{subDekkDetail.cards_count}} Cards
               <mat-checkbox class="checkbox-class"
                 [color]="'primary'"
                 [checked]="subDekkDetail.selected"
@@ -111,13 +114,13 @@
         <mat-accordion class="each-master-dekk" [togglePosition]="'before'" 
             *ngFor="let subSubDekkDetail of subDekkDetail.sub_topics">
             <mat-expansion-panel hideToggle class="disable-expand">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
+              <mat-expansion-panel-header class="child-panel-header">
+                <mat-panel-title class="col-3">
                   {{subSubDekkDetail.tag_name}}
                 </mat-panel-title>
-                <mat-panel-description>
+                <mat-panel-description class="col-5">
                   <div class="count-and-checkbox-class">
-                    {{subSubDekkDetail.cards_count}}
+                    {{subSubDekkDetail.cards_count}} Cards
                     <mat-checkbox class="checkbox-class"
                       [color]="'primary'"
                       [checked]="subSubDekkDetail.selected"
@@ -143,7 +146,7 @@
         <input matInput type="text" class="search-input" required [(ngModel)]="numCardsToStudy">
       </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" (click)="startStudySession()">Start Studying</button>
+    <button mat-stroked-button class="submit-button quarter-opacity-outline-themed" (click)="startStudySession()">Start Studying</button>
   </div>
   <div class="col-1 fitting-height"></div>
 </div>

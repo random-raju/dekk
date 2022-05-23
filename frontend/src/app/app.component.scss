@@ -1,7 +1,7 @@
 @import './../styles.scss';
 
 .background {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
 }
 
@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  min-width: 250px;
+  width: fit-content;
 }
 
 .dark-light-toggle {
@@ -39,21 +39,18 @@
   width: auto;
 }
 
-.sidebar-item {
-  padding-left: 8px;
-}
-
 .toolbar-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 5vh;
+  height: clamp(25px, 5vh, 30px);
   border-radius: 10vh;
   font-size: 11px;
+  margin-right: 1vw;
 }
 
 :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    // font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 14px;
     color: #333;
     box-sizing: border-box;
@@ -166,166 +163,125 @@
     transform: rotateY(180deg);
   }
 
-  .card-container .card:not(:last-child) {
-    margin-right: 0;
-  }
-
-  .card.card-small {
-    height: 16px;
-    width: 168px;
-  }
-
-  .card-container .card:not(.highlight-card) {
-    cursor: pointer;
-  }
-
-  .card-container .card:not(.highlight-card):hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
-  }
-
-  .card-container .card:not(.highlight-card):hover .material-icons path {
-    fill: rgb(105, 103, 103);
-  }
-
-  .card.highlight-card {
-    background-color: #1976d2;
-    color: white;
-    font-weight: 600;
-    border: none;
-    width: auto;
-    min-width: 30%;
-    position: relative;
-  }
-
-  .card.card.highlight-card span {
-    margin-left: 60px;
-  }
-  
-
-  svg#rocket {
-    width: 80px;
-    position: absolute;
-    left: -10px;
-    top: -24px;
-  }
-
-  svg#rocket-smoke {
-    height: calc(100vh - 95px);
-    position: absolute;
-    top: 10px;
-    right: 180px;
-    z-index: -10;
-  }
-
-  a,
-  a:visited,
-  a:hover {
-    color: #1976d2;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: #125699;
-  }
-
-  .terminal {
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 6px;
-    padding-top: 45px;
-    margin-top: 8px;
-    overflow: hidden;
-    background-color: rgb(15, 15, 16);
-  }
-
-  .terminal::before {
-    content: "\2022 \2022 \2022";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: rgb(58, 58, 58);
-    color: #c2c3c4;
-    width: 100%;
-    font-size: 2rem;
-    line-height: 0;
-    padding: 14px 0;
-    text-indent: 4px;
-  }
-
-  .terminal pre {
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-    color: white;
-    padding: 0 1rem 1rem;
-    margin: 0;
-  }
-
-  .circle-link {
-    height: 40px;
-    width: 40px;
-    border-radius: 40px;
-    margin: 8px;
-    background-color: white;
-    border: 1px solid #eeeeee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: 1s ease-out;
-  }
-
-  .circle-link:hover {
-    transform: translateY(-0.25rem);
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  footer {
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    line-height: 20px;
-  }
-
-  footer a {
-    display: flex;
-    align-items: center;
-  }
-
-  .github-star-badge {
-    color: #24292e;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    padding: 3px 10px;
-    border: 1px solid rgba(27,31,35,.2);
-    border-radius: 3px;
-    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
-    margin-left: 4px;
-    font-weight: 600;
-  }
-
-  .github-star-badge:hover {
-    background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);
-    border-color: rgba(27,31,35,.35);
-    background-position: -.5em;
-  }
-
-  .github-star-badge .material-icons {
-    height: 16px;
-    width: 16px;
-    margin-right: 4px;
-  }
-
-  svg#clouds {
+  .footer-class {
     position: fixed;
-    bottom: -160px;
-    left: -230px;
-    z-index: -10;
-    width: 1920px;
+    width: 100%;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: space-between;
   }
+
+  .footer-entry {
+    // float: left;
+    font-size: clamp(10px, 2.3vh, 15px);
+    margin-right: 15px;
+  }
+
+  .footer-part {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .footer-left {
+    float: left;
+    width: fit-content;
+    padding-left: 0;
+  }
+
+  .footer-right {
+    // @extend .footer-part;
+    float: right;
+    width: fit-content;
+    padding-right: 0;
+  }
+
+  .footer-icon {
+    margin-left: 15px;
+  }
+
+  .icon-img-base {
+    background-size: contain;
+    margin-right: 10px;
+  }
+
+  .img-icon-light-in-dark-mode {
+    @extend .icon-img-base;
+    background: url("./../assets/user-icon-light.svg") no-repeat;
+    background-size: contain;
+    margin-right: 10px;
+  }
+
+  .img-icon-dark-in-light-mode {
+    @extend .icon-img-base;
+    background: url("./../assets/user-icon-dark.svg") no-repeat;
+    background-size: contain;
+    margin-right: 10px;
+  }
+
+  .img-icon-light-in-dark-mode:hover {
+    @extend .icon-img-base;
+    background: url("./../assets/user-icon-light-hovered.svg") no-repeat;
+    background-size: contain;
+    margin-right: 10px;
+  }
+
+  .img-icon-dark-in-light-mode:hover {
+    @extend .icon-img-base;
+    background: url("./../assets/user-icon-dark-hovered.svg") no-repeat;
+    background-size: contain;
+    margin-right: 10px;
+  }
+
+  .mode-icon-dark-in-light-mode {
+    @extend .icon-img-base;
+    background: url("./../assets/toggle-dark.svg") no-repeat;
+    background-size: cover;
+    margin-right: 10px;
+  }
+
+  .mode-icon-light-in-dark-mode {
+    @extend .icon-img-base;
+    background: url("./../assets/toggle-light.svg") no-repeat;
+    background-size: cover;
+    margin-right: 10px;
+  }
+
+  // .card-container .card:not(:last-child) {
+  //   margin-right: 0;
+  // }
+
+  // .card.card-small {
+  //   height: 16px;
+  //   width: 168px;
+  // }
+
+  // .card-container .card:not(.highlight-card) {
+  //   cursor: pointer;
+  // }
+
+  // .card-container .card:not(.highlight-card):hover {
+  //   transform: translateY(-3px);
+  //   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  // }
+
+  // .card-container .card:not(.highlight-card):hover .material-icons path {
+  //   fill: rgb(105, 103, 103);
+  // }
+
+  // .card.highlight-card {
+  //   background-color: #1976d2;
+  //   color: white;
+  //   font-weight: 600;
+  //   border: none;
+  //   width: auto;
+  //   min-width: 30%;
+  //   position: relative;
+  // }
+
+  // .card.card.highlight-card span {
+  //   margin-left: 60px;
+  // }
 
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
@@ -373,8 +329,7 @@ mat-sidenav {
   display: flex;
   align-items: center;
   width: fit-content;
-  padding-left: 10px;
-  justify-content: space-between;
+  // justify-content: space-between;
 }
 
 .left-toolbar-block {
@@ -384,13 +339,38 @@ mat-sidenav {
 }
 
 .logo-placement {
-  height: 3.5vh;
+  margin-left: 10px !important;
+  height: clamp(18px, 3.5vh, 25px);
   // width: 5vw;
+}
+
+.icon-height {
+  height: 24px;
+}
+
+.icon-width {
+  width: 24px;
+}
+
+.img-icon {
+  @extend .icon-height, .icon-width;
+  // height: 24px;
+  // width: 24px;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
 }
 
 .menu-icon {
   cursor: pointer;
   z-index: 9;
+}
+
+.divider-class {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .search-input {
@@ -415,6 +395,23 @@ mat-sidenav {
   background: transparent !important;
 }
 
+.sb-search {
+	width: 0%;
+	min-width: 24px;
+	overflow: hidden;
+
+	-webkit-transition: width 0.3s;
+	-moz-transition: width 0.3s;
+	transition: width 0.3s;
+
+	-webkit-backface-visibility: hidden;
+}
+
+.search-click {
+  padding: 0;
+  background: transparent !important;
+}
+
 ::ng-deep .mat-form-field.mat-focused {
   // width: 40vw !important;
 
@@ -425,6 +422,10 @@ mat-sidenav {
 
 @media (max-width: 767px) {
   .head-toolbar-center {
+    display: none;
+  }
+
+  .small-screen-hide {
     display: none;
   }
 }

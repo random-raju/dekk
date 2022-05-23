@@ -1,15 +1,17 @@
 <div [hidden]="!isLoading">
   <app-loading></app-loading>
 </div>
-<div class="row page-container" [hidden]="isLoading">
+<div class="page-container" [hidden]="isLoading">
   <div class="col-1 previous-card-nav-container">
-    <mat-icon class="card-nav" (click)="getPreviousCard()"> arrow_back </mat-icon>
+    <!-- <mat-icon class="card-nav" (click)="getPreviousCard()"> arrow_back </mat-icon> -->
+    <i class="far fa-arrow-alt-circle-left card-nav" (click)="getPreviousCard()"></i>
   </div>
   <div class="col-10 study-card-container" [@flipState]="flip">
     <app-card-front [card]="card" [ngClass]="{'hide-card': !isCardFrontVisible()}"></app-card-front>
     <app-card-back [card]="card" [ngClass]="{'hide-card': isCardFrontVisible()}"></app-card-back>
   </div>
   <div class="col-1 next-card-nav-container">
-    <mat-icon class="card-nav" (click)="getNextCard()"> arrow_forward </mat-icon>
+    <!-- <mat-icon class="card-nav" (click)="getNextCard()"> arrow_forward </mat-icon> -->
+    <i class="far fa-arrow-alt-circle-right card-nav" (click)="getNextCard()"></i>
   </div>
 </div>

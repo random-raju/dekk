@@ -1,5 +1,5 @@
 <mat-card class="row search-result-container" (click)="openCard()">
-    <div class="icon-container hidden-mobile">
+    <!-- <div class="icon-container hidden-mobile">
         <mat-icon class="dekk-icon">auto_awesome_motion</mat-icon>
     </div>
     <div class="content-container">
@@ -18,5 +18,26 @@
                 </mat-chip-list>
             </div>
         </mat-card-content>
+    </div> -->
+    <div class="content-container">
+        <div class="highlight-border each-card-dekk-name">
+            {{ card.dekk_name }}
+        </div>
+        <div class="each-card-dekk-name">
+            {{ card.title }}
+        </div>
+        <div class="each-card-first-content each-card-dekk-content content-item">
+            Front of the Card: {{card.content_on_front}}
+        </div>
+        <div class="each-card-dekk-content content-item">
+            Back of the Card: {{card.content_on_back}}
+        </div>
+        <div>
+            <mat-chip-list>
+                <mat-chip *ngFor="let tag of getTags()">
+                    {{tag}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
     </div>
 </mat-card>

@@ -1,0 +1,98 @@
+.page-panel {
+    display: flex;
+    justify-content: space-between;
+    height: max-content;
+    margin-top: 5vh;
+    padding-bottom: 100px;
+}
+
+.side-padding-panel {
+    width: 5vw;
+}
+
+.middle-panel {
+    width: 100%;
+}
+
+.select-class {
+    width: 30%;
+}
+
+.panel-with-margin-above {
+    margin-top: 2vh;
+}
+
+.input-text-form-field {
+    width: 40vw;
+}
+
+.full-width-panel {
+    width: 100%;
+}
+
+.dropdown-field {
+    width: 25vw;
+    margin-right: 2vw;
+}
+
+.tags-container {
+    display: flex;
+    width: 65vw;
+}
+
+.dekk-tags-panel {
+    @extend .full-width-panel;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remove-tag-icon {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.editor-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 95%;
+    margin-top: 2vh;
+    padding: 0;
+}
+
+.card-editor {
+    width: 100%;
+    border-radius: 20px;
+    padding: 30px 24px 24px 24px;
+    box-shadow: 1px 1px 2px #353432 !important;
+    border: 0px;
+    margin: 0;
+}
+
+.editor-icon-panel {
+    position: absolute;
+    margin: 10px;
+}
+
+.editor-icon {
+    cursor: pointer;
+    margin: 0px 10px 0px 5px;
+}
+
+.create-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 95%;
+}
+
+.create-button {
+    display: flex;
+    align-items: center;
+    border-radius: 10vh;
+    margin-top: 2vh;
+}
+
+@media (max-width: 767px) {
+    .input-text-form-field {
+        width: 90%;
+    }
+}

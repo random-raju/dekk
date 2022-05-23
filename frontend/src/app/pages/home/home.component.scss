@@ -12,9 +12,19 @@
     justify-content: center;
 }
 
+.dekk-list-panel {
+    margin-top: 4vh;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 7vh;
+    // min-height: 50vh;
+}
+
 .each-dekk-title {
     display: flex;
     justify-content: center;
+    text-align: center;
     min-height: 20px;
     height: fit-content;
     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
@@ -36,11 +46,16 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: clamp(20vh, 25vh, 40vh);
+    // height: clamp(20vh, 25vh, 40vh);
 }
 
 .selected-master-dekk {
-    margin-left: 2vw;
+    display: flex;
+    justify-content: center;
+    // margin-left: 2vw;
+    margin-top: 4vh;
+    width: 100%;
+    font-size: x-large;
 }
 
 .home-card-icon {

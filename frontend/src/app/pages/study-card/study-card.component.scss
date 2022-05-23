@@ -1,5 +1,8 @@
 .page-container {
   padding-top: 3vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .card-container {
@@ -47,6 +50,7 @@
 
 .card-nav {
   cursor: pointer;
+  font-size: 24px;
 }
 
 .loading-text-container {
@@ -62,5 +66,6 @@
 }
 
 .study-card-container {
-  height: 80vh;
+  // height: 80vh;
+  width: 80%;
 }
