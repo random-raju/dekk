@@ -1,0 +1,6 @@
+<div mat-dialog-content class="dialog-center" [innerHtml]="data.msg">
+</div>
+<div mat-dialog-actions class="actions-container">
+    <button mat-stroked-button class="quarter-opacity-outline-themed dialog-button" (click)="onNoClick()">Cancel</button>
+    <button mat-stroked-button class="quarter-opacity-outline-themed dialog-button" cdkFocusInitial (click)="onOkay()">Yes</button>
+</div>

@@ -234,6 +234,10 @@ hr {
         -34px -34px white !important;
 }
 
+.mat-dialog-container {
+  background-color: $beige-color !important;
+}
+
 app-create-dekk-card {
   .mat-form-field-flex {
     box-shadow: 1px 1px 2px $blackish-color-with-double-beige-overlay !important;
@@ -548,5 +552,9 @@ app-sign-up, app-login {
     .mat-form-field-flex {
         border: 1px solid $beige-color;
     }
+  }
+
+  .mat-dialog-container {
+    background: $blackish-color-with-single-beige-overlay !important;
   }
 }

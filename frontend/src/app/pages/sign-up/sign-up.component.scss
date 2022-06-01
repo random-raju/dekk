@@ -102,6 +102,12 @@ $main-card-height: 60vh;
     margin: 10px;
 }
 
+.captcha-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vh;
+}
+
 @media (max-width: 600px) {
     .input-label {
         display: none;

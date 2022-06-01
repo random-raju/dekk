@@ -1,0 +1,49 @@
+.dialog-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+    text-align: center;
+    height: clamp(25px, 100px, 110px);
+    border-style: dotted;
+    border-radius: 20px;
+    margin: 2vh;
+}
+
+.actions-container {
+    display: flex;
+    justify-content: center;
+}
+
+.dialog-button {
+    border-radius: 20px !important;
+}
+
+.browse-label {
+    border-radius: 20px !important;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.remove-file-icon {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.drag-and-drop-container {
+    position: absolute;
+    opacity: 0;
+    width: inherit;
+    height: inherit;
+}
+
+.file-upload-input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.upload-text {
+    z-index: 99;
+}

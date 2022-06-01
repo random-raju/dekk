@@ -10,45 +10,50 @@
         <div [hidden]="!loginError" class="sign-up-error">
             Registration successful. Please login to continue.
         </div>
-        <div class="input-field">
-            <span class="input-label"> Email ID * </span>
-            <mat-form-field class="input-form-field">
-                <p class="input-label-when-small"> Email ID * </p>
-                <input matInput class="search-input" [(ngModel)]="email" name="email" required>
-            </mat-form-field>
-        </div>
-        <div class="input-field">
-            <span class="input-label"> Name * </span>
-            <mat-form-field class="input-form-field">
-                <p class="input-label-when-small"> Name * </p>
-                <input matInput class="search-input" [(ngModel)]="name" name="name" required>                        
-            </mat-form-field>
-        </div>
-        <div class="input-field">
-            <span class="input-label"> User Name * </span>
-            <mat-form-field class="input-form-field">
-                <p class="input-label-when-small"> User Name * </p>
-                <input matInput class="search-input" [(ngModel)]="username" name="username" required>                        
-            </mat-form-field>
-        </div>
-        <div class="input-field">
-            <span class="input-label"> Password * </span>
-            <mat-form-field class="input-form-field">
-                <p class="input-label-when-small"> Password* </p>
-                <input matInput class="search-input" [(ngModel)]="password"type="password" name="password" required>
-            </mat-form-field>
-        </div>
-        <div class="input-field">
-            <span class="input-label"> College * </span>
-            <mat-form-field class="input-form-field">
-                <p class="input-label-when-small"> College * </p>
-                <mat-select [(value)]="selectedCollege">
-                    <mat-option [value]="college" *ngFor="let college of collegeService.collegeList">
-                        {{college}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <button mat-stroked-button class="quarter-opacity-outline-themed sign-up-button" (click)="signUp()" color="primary">Sign Up</button>
+        <form action="" method="post" id="signup-form">
+            <div class="input-field">
+                <span class="input-label"> Email ID * </span>
+                <mat-form-field class="input-form-field">
+                    <p class="input-label-when-small"> Email ID * </p>
+                    <input matInput class="search-input" [(ngModel)]="email" name="email" required>
+                </mat-form-field>
+            </div>
+            <div class="input-field">
+                <span class="input-label"> Name * </span>
+                <mat-form-field class="input-form-field">
+                    <p class="input-label-when-small"> Name * </p>
+                    <input matInput class="search-input" [(ngModel)]="name" name="name" required>                        
+                </mat-form-field>
+            </div>
+            <div class="input-field">
+                <span class="input-label"> User Name * </span>
+                <mat-form-field class="input-form-field">
+                    <p class="input-label-when-small"> User Name * </p>
+                    <input matInput class="search-input" [(ngModel)]="username" name="username" required>                        
+                </mat-form-field>
+            </div>
+            <div class="input-field">
+                <span class="input-label"> Password * </span>
+                <mat-form-field class="input-form-field">
+                    <p class="input-label-when-small"> Password* </p>
+                    <input matInput class="search-input" [(ngModel)]="password"type="password" name="password" required>
+                </mat-form-field>
+            </div>
+            <div class="input-field">
+                <span class="input-label"> College * </span>
+                <mat-form-field class="input-form-field">
+                    <p class="input-label-when-small"> College * </p>
+                    <mat-select [(value)]="selectedCollege">
+                        <mat-option [value]="college" *ngFor="let college of collegeService.collegeList">
+                            {{college}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="input-field captcha-container">
+                <div class="g-recaptcha" data-sitekey="6LfYWTUgAAAAACDSmT3NY_MlooCkJ1iFuftjYZp3"></div>
+            </div>
+        </form>
+        <button mat-stroked-button type="submit" form="signup-form" class="quarter-opacity-outline-themed sign-up-button" (click)="signUp()" color="primary">Sign Up</button>
     </mat-card>
 </div>

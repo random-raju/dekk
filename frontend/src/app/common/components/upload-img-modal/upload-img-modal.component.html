@@ -1,0 +1,25 @@
+<div mat-dialog-content class="dialog-center" [hidden]="fileUploaded || uploadComplete">
+    <span class="upload-text">
+        Drag and Drop an Image here or
+        <label for="file-upload" class="highlight-color browse-label">
+            Browse
+        </label>
+    </span>
+    <div class="drag-and-drop-container">
+        <input id="file-upload" type="file" class="file-upload-input" [hidden]="fileUploaded" (change)="onFileSelected($event)">
+    </div>
+</div>
+<div mat-dialog-content class="dialog-center" [hidden]="!fileUploaded || uploadComplete">
+    <span>
+        {{getFileName()}}
+        <i class="far fa-times-circle remove-file-icon" (click)="removeFile()"></i>
+    </span>
+</div>
+<div mat-dialog-content class="dialog-center" [hidden]="!uploadComplete">
+    Uploaded!
+</div>
+<div mat-dialog-actions class="actions-container">
+    <button mat-stroked-button [hidden]="uploadComplete" class="quarter-opacity-outline-themed dialog-button" (click)="onNoClick()">Cancel</button>
+    <button mat-stroked-button [hidden]="uploadComplete" class="quarter-opacity-outline-themed dialog-button" cdkFocusInitial (click)="onUpload()">Upload</button>
+    <button mat-stroked-button [hidden]="!uploadComplete" class="quarter-opacity-outline-themed dialog-button" cdkFocusInitial (click)="onNoClick()">Done</button>
+</div>

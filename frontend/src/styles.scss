@@ -7,7 +7,7 @@ html, body { height: 100%; width: 100%;}
 body { margin: 0; font-family: Poppins-Light, Roboto, "Helvetica Neue", sans-serif !important; }
 
 mark {
-    background-color: #f3f57f;
+    background-color: $pink-color;
 }
 
 @font-face {
@@ -164,6 +164,27 @@ app-create-dekk-card {
             color: $beige-color;
         }
     }
+
+    mat-form-field.content-preset {
+        .mat-form-field-wrapper {
+            .mat-form-field-flex {
+                background-color: $pink-color !important;
+                color: $beige-color;
+            }
+
+            .mat-select-arrow {
+                color: $beige-color !important;
+            }
+    
+            .mat-form-field-label {
+                color: $beige-color !important;
+            }
+    
+            .mat-select-value {
+                color: $beige-color;
+            }
+        }
+    }
 }
 
 app-search-result {
@@ -231,4 +252,12 @@ app-sign-up, app-login {
 
 .pink-color-class {
     color: $pink-color !important;
+}
+
+.mat-dialog-container {
+    border-radius: 20px !important;
+}
+
+.card-editor {
+    box-shadow: 0px 2px 0px $pink-color !important;
 }

@@ -25,7 +25,7 @@ export class CardUtils {
 
     public static getDummyCard(): Card {
         return {
-            card_id: 'cedf609316c9487a06f61ff21b98ab81',
+            card_id: '',
             account_id: -1,
             title: "Invalid Card",
             category: "Invalid",

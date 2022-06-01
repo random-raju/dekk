@@ -279,9 +279,6 @@ export class StudyService {
             }
             card.visited = true;
             card.image_links = card.image_links ?? [];
-            if (card.card_id) {
-                this.markCardAsRead(card);
-            }
             card.is_bookmarked = !!card.is_bookmarked; // setting this to false in case it is not set
             return card;
         }
@@ -296,9 +293,6 @@ export class StudyService {
     }
 
     markCardAsRead(card: Card): void {
-        if (card?.visited) {
-            return;
-        }
         const urlParams = card?.card_id ? '/' + card?.card_id : '';
         this.httpClientService.get(UrlConstants.VIEW_CARD + urlParams).subscribe(() => {});
     }
