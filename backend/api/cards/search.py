@@ -194,10 +194,10 @@ def get_cards_by_tags(db_conn, tags, offset):
     tags_where_clause = re.sub(" or$", " ", tags_where_clause.strip())
     tags_where_clause = " WHERE " + tags_where_clause
 
-    print(tags_where_clause)
+    # print(tags_where_clause)
 
     query = query + tags_where_clause + f" OFFSET {offset} LIMIT 10"
-    print(query)
+    # print(query)
 
     query_result = db_conn.fetch_query_direct_query(query)
     cards_found = len(query_result)
@@ -226,7 +226,7 @@ class SearchCardsByTags:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_get(self, req, resp):
 
         if "q" in req.params and "offset" in req.params:
@@ -255,7 +255,7 @@ class SearchCards:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_get(self, req, resp):
         if "q" in req.params and "offset" in req.params:
             query_string = req.params["q"]

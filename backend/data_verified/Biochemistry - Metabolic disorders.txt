@@ -1,4 +1,4 @@
-﻿Title: Amino acids
+﻿Title: Metabolic disorders
 
 
 Tags: Metabolism, Amino acids
@@ -248,7 +248,7 @@ Hereditary defect of renal PCT and intestinal amino acid transporter that preven
 
 
 
-Title: Cystinuria
+Title: Metabolic disorders
 
 
 Tags: Metabolic disorders, Autosomal recessive disorders, Cystinuria
@@ -475,7 +475,7 @@ On examination, patients have *Hepatosplenomegaly +* (Also seen in Neimann-Pick 
 
 
 
-+=======================================
+=======================================
 
 
 Title: Metabolic disorders
@@ -497,7 +497,7 @@ Patients will progress to neurodegeneration and on examination, a characteristic
 
 
 
-+=======================================
+=======================================
 
 
 Title: Metabolic disorders
@@ -520,7 +520,7 @@ Patients with Hurler syndrome show:`
 
 
 
-+=======================================
+=======================================
 
 
 
@@ -539,7 +539,7 @@ Content on back: Patients with Hunter syndrome show aggressive behaviour with no
 
 
 
-+=======================================
+=======================================
 
 
 Title: Metabolic disorders
@@ -562,7 +562,7 @@ These reactions are metabolised by an enzyme *HGPRT (hypoxanthine-guanine phosph
 
 
 
-+=======================================
+=======================================
 
 
 Title:  Metabolic disorders
@@ -593,7 +593,7 @@ Content on back:  Clinical features of patients with Lesch-Nyhan syndrome:`
 
 
 
-+=======================================
+=======================================
 
 
 Title: Metabolic disorders
@@ -613,7 +613,7 @@ Conversion of depleted tryptophan to niacin (Vit B3) will lead to Pellagra-like 
 
 
 
-+=======================================
+=======================================
 Title: Metabolic disorders
 
 
@@ -628,7 +628,7 @@ Content on back: *NADPH* reduces glutathione which causes detoxification of free
 
 
 
-+=======================================
+=======================================
 Title: Metabolic disorders
 
 
@@ -643,7 +643,7 @@ Content on back: Patients with *Glucose-6-phosphate deficiency* have a poor RBC 
 
 
 
-+=======================================
+=======================================
 
 
 Title: Metabolic disorders
@@ -663,7 +663,7 @@ Content on back: Patients with G-6-PD deficiency show the following features:`
 Patients with G-6-PD deficiency are usually resistant to Malaria.
 
 
-+=======================================
+=======================================
 Title: Metabolic disorders
 
 
@@ -684,7 +684,7 @@ Deficiency of this enzyme leads to a benign asymptomatic condition called Fructo
 
 
 
-+=======================================
+=======================================
 
 
 Title: Metabolic disorders
@@ -701,7 +701,7 @@ Content on back: Deficiency of the enzyme *Aldolase B* causes accumulation of Fr
 
 This leads to inhibition in glycogenolysis and gluconeogenesis and the patient becomes hypoglycemic, jaundiced and starts vomiting.
 
-+=======================================
+=======================================
 
 
 Title: Metabolic disorders
@@ -724,7 +724,7 @@ Urine dipstick tests only for glucose and test for reducing sugars is a non-spec
 =======================================
 
 
-Title:  Metabolic disorders
+Title: Metabolic disorders
 
 
 Tags: Galactose metabolism, Galactosemia
@@ -739,7 +739,7 @@ Content on back: Deficiency of enzyme *Galactokinase* leads to conversion of Gal
 It is a benign autosomal recessive condition. May present with galactose in blood and urine (Galactosemia and Galactosuria respectively).
 
 
-+++=======================================
+=======================================
 
 
 Title: Metabolic disorders

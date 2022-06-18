@@ -29,88 +29,136 @@ def get_hash_for_tags(data_dict):
     return hashed
 
 
-TAGS = []
+def clean_tag_name(tag):
 
-for file in glob.glob("./data_verified/*"):
+    tag = re.sub(r":", " ", tag)
+    tag = re.sub(r"disease$", "diseases", tag)
+    tag = re.sub(r"disorder$", "disorders", tag)
+    tag = re.sub(r"^\W+", "", tag).strip()
 
-    # if 'Vitamin' not in file:
-    #     continue
-    data = open(file).read()
-    data = re.split(r"===+", data)
+    return tag
+
+
+def clean_folder_names(file):
+
     file = file.replace(".txt", "")
     file = file.replace("./data_verified\\", "")
     file = file.replace(".\data_verified\\", "")
     file = file.replace("./data_verified/", "")
     file = file.replace("./data_verified", "")
+
+    return file
+
+
+def get_tags(item):
+
+    if re.search(r"(?<=Tags:)(.*)(?=Content on front)", item):
+        tags = re.search(r"(?<=Tags:)(.*)(?=Content on front)", item).group()
+        tags = tags.split(",")
+        tags = [clean_tag_name(i) for i in tags]
+        return tags
+    else:
+        return []
+
+
+def get_subtopics(item):
+
+    if re.search(r"(?<=Title)(.*)(?=Tags:)", item):
+        subtopic = re.search(r"(?<=Title)(.*)(?=Tags)", item).group()
+        subtopic = clean_tag_name(subtopic)
+        return subtopic
+    else:
+        return None
+
+
+def create_tag_row(tag, tag_type):
+
+    tag_row = {"account_id": 1, "tag_name": tag}
+    tag_id = get_hash_for_tags(tag_row)
+    tag_row["tag_id"] = tag_id
+    tag_row["tag_type"] = tag_type
+
+    return tag_row
+
+
+def insert_tag(db_obj, tag_row):
+
+    try:
+        rowcount = db_obj.pg_handle_insert(tag_row)
+        if rowcount > 0:
+            status = True
+        else:
+            status = False
+    except:
+        status = False
+
+    return status
+
+
+def clean_flashcard(item):
+
+    item = re.sub(r"\n", " ", item)
+    item = re.sub(r"\r", " ", item)
+    item = re.sub(r"Tags( )?:( )?", "Tags:", item)
+    item = re.sub(r"Title( )?:( )?", "Title:", item)
+
+    return item
+
+
+for file in glob.glob("./data_verified/*"):
+    """
+    """
+    # if 'Biochemistry' not in file:
+    #     continue
+
+    data = open(file).read()
+    data = re.split(r"===+", data)
+    file = clean_folder_names(file)
     main_tags = file.split(" - ")
-    TAGS = TAGS + main_tags
-    title_tags = []
+    tags = []
+    sub_topics = []
     for item in data:
         if "not adding" in item:
             continue
-        item = re.sub(r"\n", " ", item)
-        item = re.sub(r"\r", " ", item)
-        item = re.sub(r"Tags( )?:( )?", "Tags:", item)
-        item = re.sub(r"Title( )?:( )?", "Title:", item)
-        if re.search(r"(?<=Title)(.*)(?=Tags:)", item):
-            title = re.search(r"(?<=Title)(.*)(?=Tags)", item).group()
-            title = re.sub(r":", " ", title)
-            title = title.strip()
-            if title not in TAGS:
-                TAGS.append(title)
-            if title not in title_tags:
-                title_tags.append(title)
-        if re.search(r"(?<=Tags:)(.*)(?=Content on front)", item):
-            tags = re.search(r"(?<=Tags:)(.*)(?=Content on front)", item).group()
-            tags = tags.split(",")
-            tags = [i.strip() for i in tags]
-            for tag in tags:
-                if tag not in TAGS:
-                    TAGS.append(tag)
 
-    TAGS = [i.strip() for i in TAGS if i.strip()]
+        item = clean_flashcard(item)
+        card_tags = get_tags(item)
+        tags = tags + card_tags
 
-    parent_hash = None
-    for i, tag in enumerate(TAGS):
-        dict_ = {
-            "tag_name": tag.strip(),
-            "account_id": 1,
-        }
-        hash_ = get_hash_for_tags(dict_)
-        dict_["tag_type"] = None
+        sub_topic = get_subtopics(item)
+        if sub_topic and sub_topic not in sub_topics:
+            sub_topics.append(sub_topic)
 
-        dict_["tag_name"] = re.sub(r"disease$", "diseases", dict_["tag_name"])
-        dict_["tag_name"] = re.sub(r"disorder$", "disorders", dict_["tag_name"])
-        dict_["tag_name"] = re.sub(r"^\W+", "", dict_["tag_name"]).strip()
+    master = main_tags[0]
+    master_row = create_tag_row(master, "master")
+    master_row["parent_topic_hash"] = master_row["tag_id"]
+    master_row["is_master_topic"] = True
+    master_row["field"] = "Medical"
 
-        if tag in main_tags:
-            if i == 0:
-                dict_["is_master_topic"] = True
-                parent_hash = hash_
-                dict_["tag_type"] = "master"
-                dict_["parent_topic_hash"] = parent_hash
-            if i == 1:
-                dict_["tag_type"] = "submaster"
+    sub_master = main_tags[1]
+    sub_master_row = create_tag_row(sub_master, "submaster")
+    sub_master_row["parent_topic_hash"] = master_row["tag_id"]
+    sub_master_row["is_master_topic"] = False
+    sub_master_row["field"] = "Medical"
 
-        if tag in title_tags:
-            dict_["tag_type"] = "subtopic"
-        else:
-            if not dict_["tag_type"]:
-                dict_["tag_type"] = "tag"
+    insert_tag(DB_OBJ, master_row)
+    insert_tag(DB_OBJ, sub_master_row)
 
-        # elif tag in main_tags and i != 0:
-        #     dict_['is_master_topic'] = True
-        dict_["field"] = "Medical"
+    sub_topics = [i.strip() for i in sub_topics if i.strip()]
+    tags = [i.strip() for i in tags if i.strip()]
 
-        dict_["tag_id"] = hash_
-        dict_["parent_topic_hash"] = parent_hash
+    for subtopic in sub_topics:
+        subtopic_row = create_tag_row(subtopic, "subtopic")
+        subtopic_row["parent_topic_hash"] = sub_master_row[
+            "tag_id"
+        ]  # grouped to submaster
+        subtopic_row["is_master_topic"] = False
+        subtopic_row["field"] = "Medical"
+        insert_tag(DB_OBJ, subtopic_row)
 
-        # print(dict_)
-        # print(i)
-        try:
-            DB_OBJ.pg_handle_insert(dict_)
-        except:
-            pass
-        #     print(dict_)
-        # print('---------------------------')
-    TAGS = []
+    for tag in tags:
+        tag_row = create_tag_row(tag, "tag")
+        tag_row["parent_topic_hash"] = sub_master_row["tag_id"]  # grouped to submaster
+        tag_row["is_master_topic"] = False
+        tag_row["field"] = "Medical"
+        insert_tag(DB_OBJ, tag_row)

@@ -43,9 +43,7 @@ def card_difference(og_card, current_card):
 
     difference = DeepDiff(og_card, current_card)
     updated_fields = []
-    # print(difference)
     for key in difference:
-        print(key)
         for col_key in difference[key].keys():
             updated_fields.append((col_key.split("['")[1].split("']")[0]))
 
@@ -713,7 +711,7 @@ class CreateSubDekk:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "tags")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_post(self, req, resp):
         try:
             subdekk_id, dekk_id = create_subdekk(self.db_conn, req)
@@ -737,7 +735,7 @@ class CreateTag:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "tags")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_post(self, req, resp):
         try:
             tag_id, dekk_id = create_tag(self.db_conn, req)
@@ -756,7 +754,7 @@ class CreateDekk:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "tags")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_post(self, req, resp):
         try:
             dekk_id = create_dekk(self.db_conn, req)
@@ -773,7 +771,7 @@ class CrudCard:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_post(self, req, resp):
         try:
             create_card(self.db_conn, req)
@@ -783,7 +781,7 @@ class CrudCard:
             message = {"message": error_message}
             http_response.err(resp, falcon.HTTP_500, message)
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_put(self, req, resp):
         try:
             edit_card(self.db_conn, req)
@@ -802,7 +800,7 @@ class GetCardsIdsForADekk:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_get(self, req, resp, dekk_id):
         if dekk_id:
             try:
@@ -827,7 +825,7 @@ class GetCardById:
     def __init__(self) -> None:
         self.db_conn = postgres.QueryManager("user_content", "cards")
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_get(self, req, resp, card_id):
         query_result = get_card_by_id(self.db_conn, card_id)
 
@@ -844,7 +842,7 @@ class GetCardById:
             message = {"message": error_message}
             http_response.err(resp, falcon.HTTP_500, message)
 
-    @falcon.before(authorization.request_valiation)
+    # @falcon.before(authorization.request_valiation)
     def on_delete(self, req, resp, card_id):
         try:
             result = delete_card(self.db_conn, req, card_id)

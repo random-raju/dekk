@@ -20,7 +20,7 @@ load_dotenv(".local.env")
 
 def get_hash_for_cards(data_dict, hsh_keys):
     """
-	Create hash of the string of (location_value, court_value)
+
 	"""
 
     # Asserting hsh_keys is not empty
@@ -60,16 +60,103 @@ def get_hash_for_tags(data_dict):
     return hashed
 
 
-for file in glob.glob("./data_verified/*"):
+def get_title(item):
 
-    data = open(file).read()
-    data = re.split(r"===+", data)
+    if re.search(r"(?<=Title)(.*)(?=Tags:)", item):
+        title = re.search(r"(?<=Title)(.*)(?=Tags)", item).group()
+        title = re.sub(r":", " ", title)
+        title = title.strip()
+        return title
+    else:
+        return ""
+
+
+def get_tags(item):
+    if re.search(r"(?<=Tags:)(.*)(?=Content on front)", item):
+        tags = re.search(r"(?<=Tags:)(.*)(?=Content on front)", item).group()
+        tags = tags.split(",")
+        tags = [i.strip() for i in tags]
+        return tags
+    else:
+        return []
+
+
+def get_content_on_front(item):
+
+    if re.search(r"(?<=Content on front)(.*)(?=Content on back)", item):
+        content_on_front = re.search(
+            r"(?<=Content on front)(.*)(?=Content on back)", item
+        ).group()
+        content_on_front = re.sub(r"(:)", " ", content_on_front)
+        content_on_front = re.sub(r"\*\*", " _____ ", content_on_front)
+        content_on_front = re.sub(r"\s{2,}", " ", content_on_front)
+        content_on_front = re.sub(r" (NOTE|Note|) ", " NOTE: ", content_on_front)
+        content_on_front = re.sub(r"``", "\n\n", content_on_front)
+        content_on_front = re.sub(r"`", "\n", content_on_front)
+        content_on_front = re.sub(r"images:(.*)", "", content_on_front).replace(
+            "images:", ""
+        )
+        return content_on_front.strip()
+    else:
+        return ""
+
+
+def get_content_on_back(item):
+
+    if re.search(r"(?<=Content on back)(.*)(?=)", item):
+        content_on_back = re.search(r"(?<=Content on back)(.*)(?=)", item).group()
+        content_on_back = re.sub(r"(:)", " ", content_on_back)
+        content_on_back = re.sub(r"\s{2,}", " ", content_on_back)
+        content_on_back = re.sub(r" (NOTE|Note|) ", " NOTE: ", content_on_back)
+        content_on_back = re.sub(r"``", "\n\n", content_on_back)
+        content_on_back = re.sub(r"`", "\n", content_on_back)
+        content_on_back = re.sub(r"images:(.*)", "", content_on_back).replace(
+            "images:", ""
+        )
+        return content_on_back.strip()
+    else:
+        return ""
+
+
+def get_image_links(item):
+
+    if "images:" in item:
+        images = re.search(r"images:(.*)", item).group().replace("images:", "").strip()
+        images = images.split(",")
+        return json.dumps(images)
+    else:
+        return None
+
+
+def preprocess_card(item):
+
+    item = re.sub(r"\n", " ", item)
+    item = re.sub(r"\r", " ", item)
+    item = re.sub(r"Tags( )?:( )?", "Tags:", item)
+    item = re.sub(r"Title( )?:( )?", "Title:", item)
+    item = re.sub(r"Content on front( )?:( )?", "Content on front:", item)
+    item = re.sub(r"Content on back( )?:( )?", "Content on back:", item)
+
+    return item
+
+
+def remove_folder_name(file):
+
     file = file.replace(".txt", "")
     file = file.replace("./data_verified/", "")
     file = file.replace("./data_verified\\", "")
     file = file.replace(".\data_verified\\", "")
     file = file.replace("./data_verified/", "")
     file = file.replace("./data_verified", "")
+
+    return file
+
+
+for file in glob.glob("./data_verified/*"):
+
+    data = open(file).read()
+    data = re.split(r"===+", data)
+    file = remove_folder_name(file)
     main_tags = file.split(" - ")
 
     for item in data:
@@ -78,61 +165,29 @@ for file in glob.glob("./data_verified/*"):
         card_dict = {}
         if "not adding" in item:
             continue
-        item = re.sub(r"\n", " ", item)
-        item = re.sub(r"\r", " ", item)
-        item = re.sub(r"Tags( )?:( )?", "Tags:", item)
-        item = re.sub(r"Title( )?:( )?", "Title:", item)
-        item = re.sub(r"Content on front( )?:( )?", "Content on front:", item)
-        item = re.sub(r"Content on back( )?:( )?", "Content on back:", item)
 
-        # print(item)
-        if re.search(r"(?<=Title)(.*)(?=Tags:)", item):
-            title = re.search(r"(?<=Title)(.*)(?=Tags)", item).group()
-            title = re.sub(r":", " ", title)
-            title = title.strip()
-            card_dict["title"] = title
-            if title not in TAGS:
-                TAGS.append(title)
-        if re.search(r"(?<=Tags:)(.*)(?=Content on front)", item):
-            tags = re.search(r"(?<=Tags:)(.*)(?=Content on front)", item).group()
-            tags = tags.split(",")
-            tags = [i.strip() for i in tags]
-            for tag in tags:
-                if tag not in TAGS:
-                    TAGS.append(tag)
-        if re.search(r"(?<=Content on front)(.*)(?=Content on back)", item):
-            content_on_front = re.search(
-                r"(?<=Content on front)(.*)(?=Content on back)", item
-            ).group()
-            content_on_front = re.sub(r"(:)", " ", content_on_front)
-            content_on_front = re.sub(r"\*\*", " _____ ", content_on_front)
-            content_on_front = re.sub(r"\s{2,}", " ", content_on_front)
-            content_on_front = re.sub(r" (NOTE|Note|) ", " NOTE: ", content_on_front)
-            content_on_front = re.sub(r"``", "\n\n", content_on_front)
-            content_on_front = re.sub(r"`", "\n", content_on_front)
-            card_dict["content_on_front"] = content_on_front.strip()
+        item = preprocess_card(item)
 
-        if re.search(r"(?<=Content on back)(.*)(?=)", item):
-            content_on_back = re.search(r"(?<=Content on back)(.*)(?=)", item).group()
-            content_on_back = re.sub(r"(:)", " ", content_on_back)
-            content_on_back = re.sub(r"\s{2,}", " ", content_on_back)
-            content_on_back = re.sub(r" (NOTE|Note|) ", " NOTE: ", content_on_back)
-            content_on_back = re.sub(r"``", "\n\n", content_on_back)
-            content_on_back = re.sub(r"`", "\n", content_on_back)
-            card_dict["content_on_back"] = content_on_back.strip()
-        if "images:" in item:
-            images = (
-                re.search(r"images:(.*)", item).group().replace("images:", "").strip()
-            )
-            images = images.split(",")
-            card_dict["image_links"] = json.dumps(images)
+        card_dict["title"] = get_title(item)
+        TAGS.append(card_dict["title"])
+
+        tags = get_tags(item)
+        for tag in tags:
+            if tag not in TAGS:
+                TAGS.append(tag)
+
+        card_dict["content_on_front"] = get_content_on_front(item)
+        card_dict["content_on_back"] = get_content_on_back(item)
+
+        card_dict["image_links"] = get_image_links(item)
 
         if card_dict and card_dict["title"]:
             # print(card_dict)
             TAGS = [i.strip() for i in TAGS if i.strip()]
+            # print(TAGS)
             for tag in TAGS:
                 card_dict["account_id"] = 1
-                print(card_dict)
+                # print(card_dict)
                 card_hash = get_hash_for_cards(card_dict, HASH_KEYS_CARDS)
                 card_dict["card_id"] = card_hash
                 dict_ = {
@@ -143,6 +198,7 @@ for file in glob.glob("./data_verified/*"):
                 dict_["tag_name"] = re.sub(r"disorder$", "disorders", dict_["tag_name"])
                 dict_["tag_name"] = re.sub(r"^\W+", "", dict_["tag_name"]).strip()
                 tag_hash = get_hash_for_tags(dict_)
+
                 for_search = (
                     card_dict["title"]
                     + " "
@@ -174,6 +230,7 @@ for file in glob.glob("./data_verified/*"):
 
                 # print(tag_hash)
                 # print('----------------')
+        # break
 
 DB_OBJ_CARDS.table = "cards"
 DB_OBJ_CARDS.pg_index_search_text()
