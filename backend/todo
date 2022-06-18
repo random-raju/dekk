@@ -38,3 +38,10 @@ Todo front end:
     1. Make sure code doesn't break and come to an halt
     2. don't make college compulsory
     3. highlight option issue
+
+1. refresh tokens
+2. signout
+3. login and register revamp with otp or new flow
+4. delete dekk and tag
+5. images small fixes
+6. add permissions layer to all apis

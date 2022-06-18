@@ -3,7 +3,7 @@ Sample API calls:
     POST - http://127.0.0.1:5000/api/v1/images/card
     {
         "card_id" : "2cf142cb0e222fc382ccddb5ef91454c",
-        "image_date" : "base64 string"
+        "image_data" : "base64 string"
     }
 
 """

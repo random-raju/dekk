@@ -21,7 +21,7 @@ REQUEST_OBJECT_KEYS = [
     "full_name",
     "email",
     "password",
-    "college",
+    # "college",
 ]
 
 
@@ -47,6 +47,11 @@ def request_valiation(req, resp, resource, params):
 
     keys_req_data = list(req_data.keys())
     keys_req_data.sort()
+    
+    try:
+        keys_req_data.remove('college')
+    except:
+        pass
 
     if not REQUEST_OBJECT_KEYS == keys_req_data:
         error_message = f"Missing keys - required key-value pairs {REQUEST_OBJECT_KEYS}"
@@ -78,7 +83,7 @@ def create_user(req):
     user_data["email"] = req_data["email"].lower().strip()
     # user_data["password"] = hashlib.md5(req_data["password"].encode()).hexdigest()
     user_data["password"] = req_data["password"]
-    user_data["college"] = req_data["college"]
+    user_data["college"] = req_data.get("college",None)
 
     return user_data
 

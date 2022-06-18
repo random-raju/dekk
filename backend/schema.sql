@@ -26,9 +26,11 @@ CREATE TABLE users.accounts (
 	college varchar null,
 	is_admin boolean null,
 	user_type varchar null,
+	google_id varchar null,
+	profile_pic_link varchar null,
 	CONSTRAINT accounts_pkey PRIMARY KEY (account_id),
-	CONSTRAINT email_unique_constraint UNIQUE (email),
-	CONSTRAINT user_name_unique_constraint UNIQUE (user_name)
+	CONSTRAINT email_unique_constraint UNIQUE (email)
+	-- CONSTRAINT user_name_unique_constraint UNIQUE (user_name)
 );
 CREATE UNIQUE INDEX email_unique_index ON users.accounts USING btree (lower((email)::text));
 CREATE UNIQUE INDEX user_name_unique_index ON users.accounts USING btree (lower((user_name)::text));
