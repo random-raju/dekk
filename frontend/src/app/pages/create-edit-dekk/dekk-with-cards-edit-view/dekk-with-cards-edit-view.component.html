@@ -18,7 +18,8 @@
             <ng-container matColumnDef="preview">
               <th mat-header-cell *matHeaderCellDef>preview</th>
               <td mat-cell *matCellDef="let element">
-                <div class="cell-preview"> {{element.content_on_front}} </div>
+                <!-- <div class="cell-preview"> {{element.content_on_front}} </div> -->
+                <div class="cell-preview" [innerHtml]="element.content_on_front"></div>
               </td>
             </ng-container>
             <ng-container matColumnDef="action">

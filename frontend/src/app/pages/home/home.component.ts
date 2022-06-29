@@ -127,8 +127,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         // this.personalDekks = this.personalDekks.map((dekk: Dekk) => { dekk.is_owner = true; return dekk; });
 
         setTimeout(() => {
-          console.log(this.dekkTabs._tabs);
-          
           this.isLoading = false; 
         }, 500);
       });

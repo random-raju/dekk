@@ -9,6 +9,7 @@ import { StudyMsgDialogComponent } from 'src/app/common/components/study-msg-dia
 import { PopupConstants } from 'src/app/common/constants/popup.constants';
 import { UrlConstants } from 'src/app/common/constants/url.constants';
 import { Card } from 'src/app/common/models/card';
+import { CardMetadata } from 'src/app/common/models/card-metadata';
 import { DekkMetadata } from 'src/app/common/models/dekk-metadata';
 import { DekkService } from 'src/app/common/services/dekk-service';
 import { StudyService } from 'src/app/common/services/study.service';
@@ -41,6 +42,9 @@ export class DekkWithCardsEditViewComponent implements OnInit {
               this.currentDekkId = params.id;
               this.dekkService.loadDekkMetadataByDekkId(this.currentDekkId!).subscribe((dekkMetadata: DekkMetadata) => {
                 this.currentDekk = dekkMetadata;
+                this.currentDekk.cards?.forEach((card: CardMetadata) => {
+                  card.content_on_front = this.studyService.getHighlightedContent(card.content_on_front);
+                });
                 setTimeout(() => {
                   this.isLoading = false;
                 }, 500);
@@ -131,6 +135,9 @@ export class DekkWithCardsEditViewComponent implements OnInit {
     this.dekkService.deleteCard(cardId).subscribe((response: any) => {
       this.dekkService.loadDekkMetadataByDekkId(this.currentDekkId!).subscribe((dekkMetadata: DekkMetadata) => {
         this.currentDekk = dekkMetadata;
+        this.currentDekk.cards?.forEach((card: CardMetadata) => {
+          card.content_on_front = this.studyService.getHighlightedContent(card.content_on_front);
+        });
         setTimeout(() => {
           this.isLoading = false;
         }, 500);

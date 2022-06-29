@@ -27,10 +27,12 @@
             {{ card.title }}
         </div>
         <div class="each-card-first-content each-card-dekk-content content-item">
-            Front of the Card: {{card.content_on_front}}
+            Front of the Card: 
+            <span class="content-item" [innerHtml]="card.content_on_front"></span>
         </div>
         <div class="each-card-dekk-content content-item">
-            Back of the Card: {{card.content_on_back}}
+            Back of the Card: 
+            <span class="content-item" [innerHtml]="card.content_on_back"></span>
         </div>
         <div>
             <mat-chip-list>

@@ -17,6 +17,7 @@ export class UrlConstants {
   public static CARDS_FROM_DEKK_ID_URL = UrlConstants.BASE_URL + '/study/dekk';
   public static REGISTER_URL = UrlConstants.BASE_URL + '/register';
   public static LOGIN_URL = UrlConstants.BASE_URL + '/login';
+  public static GOOGLE_REGISTER_LOGIN_URL = UrlConstants.BASE_URL + '/googlereglog';
   public static DEKK_DETAILS_URL = UrlConstants.BASE_URL + '/select/dekk';
   public static DEKK_METADATA_URL = UrlConstants.BASE_URL + '/dekk';
   public static DEKK_DATA_URL = UrlConstants.BASE_URL + '/dekk';

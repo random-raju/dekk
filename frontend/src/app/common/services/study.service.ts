@@ -249,7 +249,7 @@ export class StudyService {
         return this.getHighlightedContent(this.dekkCards[this.currentCardIndex]?.content_on_back);
     }
 
-    private getHighlightedContent(content: string): string {
+    public getHighlightedContent(content: string): string {
         if (!content) {
             return '';
         }

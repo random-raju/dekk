@@ -4,6 +4,11 @@
 <div class="card-container">
     <mat-card class="card-content">
         <h2>Login</h2>
+        <button mat-stroked-button class="quarter-opacity-outline-themed login-button" (click)="loginGoogle()" color="primary">
+            <i class="fab fa-google"></i>
+            Login With Google
+        </button>
+        <h3>- Or -</h3>
         <div [hidden]="!loginError" class="login-error">
             Login failed. Please check the fields you have entered.
         </div>
