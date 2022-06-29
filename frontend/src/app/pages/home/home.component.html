@@ -29,7 +29,7 @@
         <mat-tab label="My Dekks">
             <div class="row dekk-list-panel">
                 <div class="col-md-3 col-sm-4 col-6" [hidden]="isLoading" *ngFor="let dekk of personalDekks">
-                    <mat-card class="each-dekk dekk-effect" (click)="editDekk(dekk.tag_id)">
+                    <mat-card class="each-dekk dekk-effect" (click)="selectSubDekk(dekk.tag_id)">
                         <span class="home-card-icon" (click)="editDekk(dekk)">
                             <mat-icon>edit</mat-icon>
                         </span>

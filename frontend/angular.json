@@ -31,7 +31,8 @@
               "src/assets",
               { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/skins/" },
               { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/themes/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" }
+              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" },
+              { "glob": "**/*", "input": "src/assets", "output": "/assets/" }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",

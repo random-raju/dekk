@@ -1,26 +1,36 @@
-<div class="row login-page">
-    <div class="login-container">
-        <mat-card class="login-card">
-            <mat-card-content class="login-card-content">
-                <h2>Login</h2>
-                <div class="input-field">
-                    <span class="input-label"> Username * </span>
-                    <mat-form-field class="input-form-field">
-                        <p class="input-label-when-small"> Username * </p>
-                        <input matInput class="search-input" [(ngModel)]="password"type="text" name="password" required>
-                    </mat-form-field>
-                </div>
-                <div class="input-field">
-                    <span class="input-label"> Password * </span>
-                    <mat-form-field class="input-form-field">
-                        <p class="input-label-when-small"> Password * </p>
-                        <input matInput class="search-input" [(ngModel)]="password"type="password" name="password" required>
-                    </mat-form-field>
-                </div>
-                <form class="login-form"></form>
-                <button mat-raised-button (click)="login()" color="primary">Login</button>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<div [hidden]="!isLoading">
+    <app-loading></app-loading>
 </div>
- 
+<div class="card-container">
+    <mat-card class="card-content">
+        <h2>Login</h2>
+        <button mat-stroked-button class="quarter-opacity-outline-themed login-button" (click)="loginGoogle()" color="primary">
+            <i class="fab fa-google"></i>
+            Login With Google
+        </button>
+        <h3>- Or -</h3>
+        <div [hidden]="!loginError" class="login-error">
+            Login failed. Please check the fields you have entered.
+        </div>
+        <form action="" method="post" id="login-form">
+            <div class="input-field">
+                <span class="input-label"> Email ID * </span>
+                <mat-form-field class="input-form-field">
+                    <p class="input-label-when-small"> Email ID * </p>
+                    <input matInput class="search-input" [(ngModel)]="email" name="email" required>
+                </mat-form-field>
+            </div>
+            <div class="input-field">
+                <span class="input-label"> Password * </span>
+                <mat-form-field class="input-form-field">
+                    <p class="input-label-when-small"> Password* </p>
+                    <input matInput class="search-input" [(ngModel)]="password" type="password" name="password" required>
+                </mat-form-field>
+            </div>
+            <div class="input-field captcha-container">
+                <div class="g-recaptcha" data-sitekey="6LfYWTUgAAAAACDSmT3NY_MlooCkJ1iFuftjYZp3"></div>
+            </div>
+        </form>
+        <button mat-stroked-button type="submit" form="login-form" class="quarter-opacity-outline-themed login-button" (click)="login()" color="primary">Login</button>
+    </mat-card>
+</div>

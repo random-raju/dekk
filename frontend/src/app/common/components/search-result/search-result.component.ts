@@ -15,6 +15,8 @@ export class SearchResultComponent implements OnInit, OnChanges {
   @Input()
   card: any;
 
+  MAX_NUM_OF_CHARS = 90;
+
   constructor(public studyService: StudyService, private router: Router) { }
 
   ngOnInit(): void { }
@@ -26,6 +28,8 @@ export class SearchResultComponent implements OnInit, OnChanges {
     //   .filter((tag: string) => { return this.card.tags[tag] === 1 })
     //   .join(', ');
     this.card.dekk_name = 'Placeholder Dekk Name';
+    this.card.content_on_front = this.studyService.getHighlightedContent(this.card.content_on_front?.substring(0, this.MAX_NUM_OF_CHARS) + '...');
+    this.card.content_on_back = this.studyService.getHighlightedContent(this.card.content_on_back?.substring(0, this.MAX_NUM_OF_CHARS) + '...');
   }
 
   getTags(): string[] {

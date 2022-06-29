@@ -137,10 +137,11 @@ export class AppComponent {
   }
     
   loginClicked(): void {
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-      data: {},
-      panelClass: 'filter-popup'
-    });
+    // const dialogRef = this.dialog.open(LoginDialogComponent, {
+    //   data: {},
+    //   panelClass: 'filter-popup'
+    // });
+    this.router.navigate([UrlConstants.LOGIN]);
   }
     
   signupClicked(): void {

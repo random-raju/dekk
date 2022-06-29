@@ -12,7 +12,10 @@ import { PopupConstants } from 'src/app/common/constants/popup.constants';
 import { DekkService } from 'src/app/common/services/dekk-service';
 import { MsgDialogComponent } from 'src/app/common/components/msg-dialog/msg-dialog.component';
 import { ErrorDialogComponent } from 'src/app/common/components/error-dialog/error-dialog.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Card } from 'src/app/common/models/card';
+import { UploadImgModalComponent } from 'src/app/common/components/upload-img-modal/upload-img-modal.component';
 
 // import * as $ from 'jquery';
 
@@ -37,13 +40,18 @@ export class CreateDekkCardComponent implements OnInit {
   currentCardId: string;
   frontContent: string;
   backContent: string;
+  currentDekkId: string;
+  currentCard: Card;
+  isContentPreset = false;
 
   // latestHighlight: any;
   // latestHighlightedField: any;
 
   dekkLoadListener: any;
 
-  constructor(private httpClientService: HttpClientService, public tagsService: TagsService, private dialog: MatDialog, private dekkService: DekkService, private router: Router) { 
+  routeListener: Subscription;
+
+  constructor(private httpClientService: HttpClientService, public tagsService: TagsService, private dialog: MatDialog, private dekkService: DekkService, private router: Router, private activatedRoute: ActivatedRoute) { 
     this.isLoading = true;
     this.tagsService.loadTags().subscribe(()=>{
       this.allTagOptions = tagsService.tagsList;
@@ -56,14 +64,42 @@ export class CreateDekkCardComponent implements OnInit {
       this.dekkOptions = this.allDekkOptions;
       this.isLoading = false;
     });
-
-    // document.onmouseup = document.onkeyup = document.onselectionchange = () => {
-    //   console.log(window.getSelection()?.toString());
-    //   this.latestHighlight = window.getSelection();
-    //   setTimeout(() => {
-    //     this.latestHighlightedField = document.activeElement?.id === 'front-content' ? 'front' : (document.activeElement?.id === 'back-content' ? 'back' : null);
-    //   }, 250);
-    // };
+    this.routeListener = this.router.events.subscribe((event) => {
+      this.isLoading = true;
+      if (event instanceof NavigationEnd) {
+        const currentUrl = event.url.split('?')[0];
+        if (currentUrl === UrlConstants.CREATE_DEKK_CARD) {
+          this.activatedRoute.queryParams.subscribe((params: any) => {
+            if (params.dekk_id) {
+              this.currentDekkId = params.dekk_id;
+              if (params.id) {
+                this.currentCardId = params.id;
+                this.dekkService.loadCardByCardId(this.currentCardId!).subscribe((card: Card[]) => {
+                  this.currentCard = card[0];
+                  this.cardName = this.currentCard.title;
+                  this.frontContent = this.currentCard.content_on_front;
+                  this.backContent = this.currentCard.content_on_back;
+                  this.selectedDekk = this.allDekkOptions.filter((dekk: Dekk) => dekk.tag_id === this.currentDekkId)[0];
+                  this.dekks.setValue(this.selectedDekk);
+                  this.tags.setValue(this.tagsService.tagsList.filter((tag: Tag) => this.currentCard.tags?.includes(tag.tag_id!)));
+                  this.isContentPreset = true;
+                  setTimeout(() => {
+                    this.isLoading = false;
+                  }, 500);
+                }, (error: any) => {
+                  this.handleCardLoadError();
+                });
+              } else {
+                this.currentCardId = '';
+                setTimeout(() => {
+                  this.isLoading = false;
+                }, 500);
+              }
+            }
+          });
+        }
+      }
+    });
   }
 
   ngOnInit(): void { }
@@ -213,4 +249,28 @@ export class CreateDekkCardComponent implements OnInit {
     // $('#testInput').focus();
     // $('#testInput').select();
   }
+
+  handleCardLoadError(): void {
+    const dialogRef = this.dialog.open(ErrorDialogComponent, {
+      data: {
+          msg: PopupConstants.CARD_METADATA_LOAD_ERROR
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed: ', result);
+    });
+  }
+
+  uploadImage(frontOrBack: string): void {
+    const dialogRef = this.dialog.open(UploadImgModalComponent, {
+      data: {
+          callback: this.handleImage.bind(this)
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed: ', result);
+    });
+  }
+
+  handleImage(): void {}
 }

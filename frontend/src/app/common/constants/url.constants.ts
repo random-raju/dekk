@@ -17,6 +17,7 @@ export class UrlConstants {
   public static CARDS_FROM_DEKK_ID_URL = UrlConstants.BASE_URL + '/study/dekk';
   public static REGISTER_URL = UrlConstants.BASE_URL + '/register';
   public static LOGIN_URL = UrlConstants.BASE_URL + '/login';
+  public static GOOGLE_REGISTER_LOGIN_URL = UrlConstants.BASE_URL + '/googlereglog';
   public static DEKK_DETAILS_URL = UrlConstants.BASE_URL + '/select/dekk';
   public static DEKK_METADATA_URL = UrlConstants.BASE_URL + '/dekk';
   public static DEKK_DATA_URL = UrlConstants.BASE_URL + '/dekk';
@@ -26,9 +27,14 @@ export class UrlConstants {
   public static DELETE_CARD_URL = UrlConstants.BASE_URL + '/card';
   public static GET_COLLEGES_URL = UrlConstants.BASE_URL + '/resources/colleges';
   public static CREATE_SUBDEKK_URL = UrlConstants.BASE_URL + '/subdekk';
+  public static VIEW_CARD = UrlConstants.BASE_URL + '/view/card';
+  public static BOOKMARK_CARD = UrlConstants.BASE_URL + '/bookmark/card';
+  public static UNBOOKMARK_CARD = UrlConstants.BASE_URL + '/unmark/card';
 
   // Routing URLs
   public static SEARCH_RESULTS = '/search-results';
+  public static SIGN_UP = '/sign-up';
+  public static LOGIN = '/login';
   public static HOME = '/home';
   public static CREATE = '/create';
   public static CREATE_DEKK_CARD = '/create-dekk-card';

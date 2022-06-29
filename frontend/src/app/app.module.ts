@@ -66,7 +66,13 @@ import { CreateEditSubdekkDetailComponent } from './pages/create-edit-dekk/creat
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { CreateDekkCardComponent } from './pages/create-dekk-card/create-dekk-card.component';
+import { AreYouSureDialogComponent } from './common/components/are-you-sure-dialog/are-you-sure-dialog.component';
+import { UploadImgModalComponent } from './common/components/upload-img-modal/upload-img-modal.component';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
+import { OauthConstants } from './common/constants/oauth.constants';
 // import { TextInputHighlightModule } from 'angular-text-input-highlight';
+
+const CLIENT_ID = OauthConstants.clientId;
 
 @NgModule({
   declarations: [
@@ -101,6 +107,8 @@ import { CreateDekkCardComponent } from './pages/create-dekk-card/create-dekk-ca
     CreateEditSubdekkDetailComponent,
     PageNotFoundComponent,
     CreateDekkCardComponent,
+    AreYouSureDialogComponent,
+    UploadImgModalComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -137,10 +145,25 @@ import { CreateDekkCardComponent } from './pages/create-dekk-card/create-dekk-ca
     MatDividerModule,
     MatCheckboxModule,
     MatAutocompleteModule,
-    MatTabsModule
+    MatTabsModule,
+    SocialLoginModule
   ],
   providers: [
-    CdkColumnDef
+    CdkColumnDef,
+    {
+      provide: "SocialAuthServiceConfig",
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              CLIENT_ID
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

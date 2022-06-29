@@ -1,7 +1,7 @@
 <mat-card class="card-container dekk-or-card-shadow">
   <div class="card-content-container">
     <div>
-      <div class="content-item img-container">
+      <div class="content-item img-container" [hidden]="isNoImages()">
         <img class="img-class img-first" alt="Could not load image" (load)="firstImageLoaded()" [hidden]="!getFirstImageSrc() || firstImageLoading" (click)="openImg(getFirstImageSrc())" src="{{getFirstImageSrc()}}" />
         <img class="img-class" alt="Could not load image" (load)="secondImageLoaded()" [hidden]="!getSecondImageSrc() || secondImageLoading" (click)="openImg(getSecondImageSrc())" src="{{getSecondImageSrc()}}" />
       </div>
@@ -10,7 +10,14 @@
       <mat-card-subtitle class="unselectable-content card-subtitle">
         <span class="dekk-name card-header">{{getCardDekk()}}</span>
         <span>
-          <mat-icon class="card-options-icon" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+          <span>
+            <i class="far fa-star pink-color-class card-options-icon" (click)="bookmarkToggle()" [hidden]="card.is_bookmarked"></i>
+            <i class="fas fa-star pink-color-class card-options-icon" (click)="bookmarkToggle()" [hidden]="!card.is_bookmarked"></i>
+          </span>
+          <span>
+            <!-- <mat-icon class="card-options-icon" [matMenuTriggerFor]="menu">more_vert</mat-icon> -->
+            <i class="fas fa-ellipsis-v card-options-icon" [matMenuTriggerFor]="menu"></i>
+          </span>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="rateDialog()">Feedback</button>
           </mat-menu>

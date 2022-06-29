@@ -127,8 +127,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         // this.personalDekks = this.personalDekks.map((dekk: Dekk) => { dekk.is_owner = true; return dekk; });
 
         setTimeout(() => {
-          console.log(this.dekkTabs._tabs);
-          
           this.isLoading = false; 
         }, 500);
       });
@@ -141,8 +139,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate([UrlConstants.HOME], {queryParams: { id: dekkId }});
       });
     } else {
-      this.studySessionDekk(dekkId);
+      this.selectSubDekk(dekkId);
     }
+  }
+
+  selectSubDekk(dekkId: string): void {
+    this.studySessionDekk(dekkId);
   }
 
   studyDekk(dekkId: string): void {

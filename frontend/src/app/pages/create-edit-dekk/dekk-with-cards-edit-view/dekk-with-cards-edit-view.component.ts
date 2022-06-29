@@ -2,15 +2,17 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AreYouSureDialogComponent } from 'src/app/common/components/are-you-sure-dialog/are-you-sure-dialog.component';
 import { ErrorDialogComponent } from 'src/app/common/components/error-dialog/error-dialog.component';
 import { RatingDialogComponent } from 'src/app/common/components/rating-dialog/rating-dialog.component';
+import { StudyMsgDialogComponent } from 'src/app/common/components/study-msg-dialog/study-msg-dialog.component';
 import { PopupConstants } from 'src/app/common/constants/popup.constants';
 import { UrlConstants } from 'src/app/common/constants/url.constants';
 import { Card } from 'src/app/common/models/card';
+import { CardMetadata } from 'src/app/common/models/card-metadata';
 import { DekkMetadata } from 'src/app/common/models/dekk-metadata';
 import { DekkService } from 'src/app/common/services/dekk-service';
 import { StudyService } from 'src/app/common/services/study.service';
-import { CardUtils } from 'src/app/common/utils/card.utils';
 import { DekkUtils } from 'src/app/common/utils/dekk-utils';
 
 @Component({
@@ -40,6 +42,9 @@ export class DekkWithCardsEditViewComponent implements OnInit {
               this.currentDekkId = params.id;
               this.dekkService.loadDekkMetadataByDekkId(this.currentDekkId!).subscribe((dekkMetadata: DekkMetadata) => {
                 this.currentDekk = dekkMetadata;
+                this.currentDekk.cards?.forEach((card: CardMetadata) => {
+                  card.content_on_front = this.studyService.getHighlightedContent(card.content_on_front);
+                });
                 setTimeout(() => {
                   this.isLoading = false;
                 }, 500);
@@ -82,7 +87,7 @@ export class DekkWithCardsEditViewComponent implements OnInit {
   }
 
   addCard(): void {
-    this.router.navigate([UrlConstants.CARD_EDIT_VIEW], {queryParams: { dekk_id: this.currentDekkId }});
+    this.router.navigate([UrlConstants.CREATE_DEKK_CARD]);
   }
 
   rateDialog(): void {
@@ -107,14 +112,32 @@ export class DekkWithCardsEditViewComponent implements OnInit {
 
   editCard(cardId: string): void {
     // this.isLoading = true;
-    this.router.navigate([UrlConstants.CARD_EDIT_VIEW], {queryParams: { id: cardId, dekk_id: this.currentDekkId }});
+    // this.router.navigate([UrlConstants.CARD_EDIT_VIEW], {queryParams: { id: cardId, dekk_id: this.currentDekkId }});
+    this.router.navigate([UrlConstants.CREATE_DEKK_CARD], {queryParams: { id: cardId, dekk_id: this.currentDekkId }});
   }
 
   deleteCard(cardId: string): void {
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent, {
+      data: {
+          msg: PopupConstants.DELETE_PROMPT_MSG,
+          cardId: cardId,
+          callback: this.handleDelete.bind(this)
+        }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed: ', result);
+    });
+  }
+
+  handleDelete(cardId: string): void {
     this.isLoading = true;
     this.dekkService.deleteCard(cardId).subscribe((response: any) => {
       this.dekkService.loadDekkMetadataByDekkId(this.currentDekkId!).subscribe((dekkMetadata: DekkMetadata) => {
         this.currentDekk = dekkMetadata;
+        this.currentDekk.cards?.forEach((card: CardMetadata) => {
+          card.content_on_front = this.studyService.getHighlightedContent(card.content_on_front);
+        });
         setTimeout(() => {
           this.isLoading = false;
         }, 500);

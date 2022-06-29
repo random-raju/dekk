@@ -121,6 +121,9 @@ export class StudyCardComponent implements OnInit, OnDestroy {
 
   flipToBack() {
     this.toggleFlip();
+    if (!!this.card?.card_id) {
+      this.studyService.markCardAsRead(this.card);
+    }
     setTimeout(() => {this.visibleFront = false;}, 250);
   }
 

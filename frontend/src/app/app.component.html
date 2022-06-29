@@ -5,7 +5,7 @@
     <div class="left-toolbar">
       <img src="assets/dark-logo-full.png" class="logo-placement menu-icon" [hidden]="isDarkThemeEnabled" (click)="goToHomePage()" />
       <img src="assets/light-logo-full.png" class="logo-placement menu-icon" [hidden]="!isDarkThemeEnabled" (click)="goToHomePage()" />
-      <button mat-stroked-button class="toolbar-button icon-img-base menu-icon quarter-opacity-outline-themed small-screen-hide" color="accent" (click)="goToStudy()">Study</button>
+      <button mat-stroked-button [hidden]="!isLoggedIn()" class="toolbar-button icon-img-base menu-icon quarter-opacity-outline-themed small-screen-hide" color="accent" (click)="goToStudy()">Study</button>
       <!-- <mat-search-bar
         (onEnter)="submitSearch($event)"
         matTooltip="Search"
@@ -17,7 +17,7 @@
           <mat-icon class="color-themed left-toolbar-block" (click)="toggleSearch()">search</mat-icon>
           <input [@searchTrigger]="isSearchActive" class="search-click" placeholder="Enter your search term..." type="search" value="" name="search" id="searchInput" />
 		      <input hidden class="sb-search-submit" type="submit" value="" />
-      </form>
+       </form>
       </span>
     </div>
     <div class="head-toolbar-center" [hidden]="isLoggedIn()">
@@ -27,9 +27,9 @@
     </div>
     <div class="head-toolbar-right">
       <div [hidden]="isLoggedIn()">
-        <button mat-button color="accent" (click)="loginClicked()">Sign In</button>
+        <button mat-button (click)="loginClicked()">Sign In</button>
       </div>
-      <button mat-stroked-button class="toolbar-button menu-icon quarter-opacity-outline-themed small-screen-hide" color="accent" (click)="goToCreateView()">Create</button>
+      <button mat-stroked-button [hidden]="!isLoggedIn()" class="toolbar-button menu-icon quarter-opacity-outline-themed small-screen-hide" color="accent" (click)="goToCreateView()">Create</button>
       <span [hidden]="!isLoggedIn()" class="dark-light-toggle padded-toolbar-component">
         <mat-slide-toggle class="small-screen-hide dark-light-toggle" matTooltip="Dark Mode Toggle" (click)="toggle()" [(ngModel)]="isDarkThemeEnabled">
         </mat-slide-toggle>
@@ -39,17 +39,17 @@
       <!-- <mat-icon [hidden]="!isLoggedIn()" class="search-icon menu-icon color-themed" color="accent" [matMenuTriggerFor]="menu">person</mat-icon> -->
       <!-- <img src="assets/user-icon-light.svg" class="img-icon img-icon-light-in-dark-mode menu-icon" [hidden]="!isDarkThemeEnabled || !isLoggedIn()" [matMenuTriggerFor]="menu" />
       <img src="assets/user-icon-dark.svg" class="img-icon img-icon-dark-in-light-mode menu-icon" [hidden]="isDarkThemeEnabled || !isLoggedIn()" [matMenuTriggerFor]="menu" /> -->
-      <div class="img-icon img-icon-light-in-dark-mode menu-icon" [hidden]="!isDarkThemeEnabled || !isLoggedIn()" [matMenuTriggerFor]="menu"></div>
-      <div class="img-icon img-icon-dark-in-light-mode menu-icon" [hidden]="isDarkThemeEnabled || !isLoggedIn()" [matMenuTriggerFor]="menu"></div>
+      <div class="img-icon img-icon-light-in-dark-mode menu-icon" [hidden]="!isDarkThemeEnabled" [matMenuTriggerFor]="menu"></div>
+      <div class="img-icon img-icon-dark-in-light-mode menu-icon" [hidden]="isDarkThemeEnabled" [matMenuTriggerFor]="menu"></div>
       <mat-menu #menu="matMenu" class="menu-background menu-style">
-        <button mat-menu-item class="menu-item">Account</button>
-        <button mat-menu-item class="menu-item">Settings</button>
-        <button mat-menu-item class="menu-item">Bookmarks</button>
-        <mat-divider class="divider-themed divider-class"></mat-divider>
+        <button mat-menu-item [hidden]="!isLoggedIn()" class="menu-item">Account</button>
+        <button mat-menu-item [hidden]="!isLoggedIn()" class="menu-item">Settings</button>
+        <button mat-menu-item [hidden]="!isLoggedIn()" class="menu-item">Bookmarks</button>
+        <mat-divider [hidden]="!isLoggedIn()" class="divider-themed divider-class"></mat-divider>
         <button mat-menu-item class="menu-item" (click)="goToAboutUs()">About</button>
         <button mat-menu-item class="menu-item" (click)="goToWhyDekk()">Why Dekk</button>
-        <mat-divider class="divider-themed divider-class"></mat-divider>
-        <button mat-menu-item class="menu-item" (click)="logout()">Log Out</button>
+        <mat-divider [hidden]="!isLoggedIn()" class="divider-themed divider-class"></mat-divider>
+        <button [hidden]="!isLoggedIn()" mat-menu-item class="menu-item" (click)="logout()">Log Out</button>
       </mat-menu>
     </div>
   </div>

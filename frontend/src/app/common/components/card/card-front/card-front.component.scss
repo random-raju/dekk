@@ -52,8 +52,9 @@
 }
 
 .card-options-icon {
-  float: right;
+  // float: right;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .menu-item {
@@ -100,12 +101,13 @@
   cursor: pointer;
 }
 
-.img-first {
-  margin-bottom: 2vw;
-}
-
 .content-container-right {
   margin-left: 2vw;
+  width: 90%;
+}
+
+span {
+  font-size: 18px !important;
 }
 
 @media (max-width: 400px) {

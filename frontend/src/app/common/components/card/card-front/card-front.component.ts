@@ -98,4 +98,16 @@ export class CardFrontComponent implements OnInit, OnChanges {
   secondImageLoaded(): void {
     this.secondImageLoading = false;
   }
+
+  isNoImages(): boolean {
+    return this.studyService.getCurrentCard().image_links?.length === 0;
+  }
+
+  bookmarkToggle(): void {
+    if (this.card.is_bookmarked) {
+      this.studyService.unbookmark(this.card);
+    } else {
+      this.studyService.bookmark(this.card);
+    }
+  }
 }
